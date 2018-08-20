@@ -1,4 +1,4 @@
-# Reqtionary6New
+# Reqtionary
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.1.
 
