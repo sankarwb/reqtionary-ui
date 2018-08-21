@@ -7,10 +7,10 @@ export class GlobalSharedService {
 
     constructor() {}
 
-    private user$: User = new User('', UserType.developer, '', '');
+    private user$: User = new User('', 'Sankara', 'Asapu', UserType.developer, '', '');
 
     set user(user: User) {
-        this.user$ = user || new User('', UserType.developer, '', '');
+        this.user$ = user;
     }
 
     get user(): User {

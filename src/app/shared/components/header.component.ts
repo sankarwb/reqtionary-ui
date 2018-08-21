@@ -7,12 +7,20 @@ import { EventsService, GlobalSharedService } from '../services';
     <div style="display: flex; align-items: stretch; height: 75px;">
         <div style="display: flex; align-items: center;">
             <a mat-button routerLink=".">
-                <strong style="color: #02aecc;" [style.fontSize]="(appSelected?30:20)+'px'"> {{appSelected?'W':'WINDBRICKS'}} </strong>
+                <strong style="color: var(--theme-color);" [style.fontSize]="(appSelected?30:20)+'px'">
+                    {{appSelected?' W ':' WINDBRICKS '}}
+                </strong>
             </a>
         </div>
         <div class="header-items-container">
-            <a>Home</a>
-            <a>Org Chart</a>
+            <a mat-button style="padding-left: 5px;">Home</a>
+            <a mat-button style="padding-left: 5px;">Org Chart</a>
+            <app-search-box (searchTextChange)="searchChange($event)"></app-search-box>
+        </div>
+        <div style="display: flex; align-items: center; padding-right: 15px;">
+            <label style="padding-right: 10px;">{{globalService.user.firstName}} {{globalService.user.lastName}}</label>
+            <img src="../../../assets/user_thumbnail.jpg" class="thumbnail">
+            <mat-icon style="color: var(--theme-color);">expand_more</mat-icon>
         </div>
     </div>
   `,
@@ -23,8 +31,16 @@ import { EventsService, GlobalSharedService } from '../services';
         flex: 1;
         border-bottom-left-radius: 16px;
         box-shadow: -5px 0px 20px rgb(0, 0, 0, 0.05);
-        color: #02aecc;
-      }`
+        color: var(--theme-color);
+      }`,
+      `.thumbnail {
+        max-width: 36px;
+        height: auto;
+        margin-right: 10px;
+        border-radius: 50%;
+        border: 1px solid var(--theme-color);
+      }
+      `
   ]
 })
 export class HeaderComponent implements OnInit {
@@ -39,5 +55,9 @@ export class HeaderComponent implements OnInit {
         this.eventsService.appSelectionChange.subscribe((appselected: string) => {
             this.appSelected = appselected;
         });
+    }
+
+    searchChange(searchTxt: string): void {
+        console.log(searchTxt);
     }
 }

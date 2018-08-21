@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { GlobalSharedService, EventsService, HttpInterceptorService } from './services';
 import { HeaderComponent } from './components/header.component';
 import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
+import { SearchBoxComponent } from './components/search-box.component';
 
 @NgModule({
   imports: [
@@ -13,10 +14,12 @@ import { AngularMaterialModule } from '../angularmaterial/angular-material.modul
     AngularMaterialModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    SearchBoxComponent
   ],
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    SearchBoxComponent
   ],
   providers: [
       HttpInterceptorService,
