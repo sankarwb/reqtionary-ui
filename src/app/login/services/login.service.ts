@@ -27,7 +27,7 @@ export class LoginService {
     }
 
     userDetails(response: LoginResponse): void {
-        const user = new User('U123', UserType.developer, '', '');
+        const user = new User('U123', 'Sankara', 'Asapu', UserType.developer, '', '');
         this.globalService.user = user;
     }
 }
