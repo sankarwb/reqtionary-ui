@@ -1,0 +1,11 @@
+import { UserType } from '../shared/models/user-type.model';
+
+export class Employee {
+    id: string;
+    uid: string;
+    type: UserType;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    email: string;
+}

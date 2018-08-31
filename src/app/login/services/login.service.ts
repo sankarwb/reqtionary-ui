@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { LoginRequest } from '../models/login-request.model';
-import { LoginResponse } from '../models/login-response.model';
-import { GlobalSharedService } from '../../shared/services';
-import { User } from '../../shared/models/user.model';
-import { UserType } from '../../shared/models/user-type.model';
+import { GlobalSharedService } from '../../services';
+import { authenticate } from '../../endpoints';
+import { Employee } from '../../models/employee.model';
 
 @Injectable()
 export class LoginService {
@@ -19,15 +18,14 @@ export class LoginService {
     ) {}
 
     validateCredentials(request: LoginRequest): Subscription {
-        return this.http.get('', {withCredentials: true})
-                .subscribe((response: LoginResponse) => {
+        return this.http.get<Employee>(authenticate)
+                .subscribe(response => {
                     this.userDetails(response);
-                    this.router.navigateByUrl('/app/home');
                 });
     }
 
-    userDetails(response: LoginResponse): void {
-        const user = new User('U123', 'Sankara', 'Asapu', UserType.developer, '', '');
-        this.globalService.user = user;
+    userDetails(employee: Employee): void {
+        this.globalService.user = employee;
+        this.router.navigateByUrl('/app/home');
     }
 }

@@ -1,5 +1,4 @@
-import { Component, Output } from '@angular/core';
-import { EventEmitter } from '../../../../node_modules/protractor';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-search-box',

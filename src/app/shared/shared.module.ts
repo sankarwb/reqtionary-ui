@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { GlobalSharedService, EventsService, HttpInterceptorService } from './services';
 import { HeaderComponent } from './components/header.component';
 import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
 import { SearchBoxComponent } from './components/search-box.component';
@@ -10,7 +8,6 @@ import { SearchBoxComponent } from './components/search-box.component';
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule,
     AngularMaterialModule
   ],
   exports: [
@@ -21,10 +18,6 @@ import { SearchBoxComponent } from './components/search-box.component';
     HeaderComponent,
     SearchBoxComponent
   ],
-  providers: [
-      HttpInterceptorService,
-      GlobalSharedService,
-      EventsService
-  ]
+  providers: []
 })
 export class SharedModule { }

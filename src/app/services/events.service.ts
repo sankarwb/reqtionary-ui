@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
-import { AlertMessage } from '../models/alert-message.model';
+import { AlertMessage } from '../shared/models/alert-message.model';
 
 @Injectable()
 export class EventsService {
