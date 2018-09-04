@@ -5,7 +5,7 @@ import { ReqtionaryComponent } from './reqtionary.component';
 const routes: Routes = [
     { path: '', component: ReqtionaryComponent,
         children: [
-            { path: 'home', loadChildren: '../home/home.module#HomeModule' }
+            { path: ':userId', loadChildren: '../home/home.module#HomeModule' }
         ]
     }
 ];

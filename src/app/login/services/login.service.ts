@@ -18,14 +18,11 @@ export class LoginService {
     ) {}
 
     validateCredentials(request: LoginRequest): Subscription {
-        return this.http.get<Employee>(authenticate)
-                .subscribe(response => {
-                    this.userDetails(response);
-                });
+        return this.http.get<Employee>(authenticate).subscribe(response => this.userDetails(response));
     }
 
     userDetails(employee: Employee): void {
         this.globalService.user = employee;
-        this.router.navigateByUrl('/app/home');
+        this.router.navigate(['/home', employee.id]);
     }
 }

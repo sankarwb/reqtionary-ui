@@ -1,15 +1,17 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@font-face {
+/* @font-face {
     font-family: franklin;
     src: url("./assets/fonts/FRABK.TTF");
 }
 @font-face {
     font-family: franklin1;
     src: url("./assets/fonts/FRAMD.TTF");
-}
+} */
 
 :root {
     --theme-color: #4DB2F3;
+    --heading-text-color: #262626;
+    --descriptive-text-color: #70757B;
 }
 
 * {
@@ -23,4 +25,13 @@ html, body {
 
 body {
     margin: 0%;
+}
+
+a {
+    color: var(--theme-color);
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
 }

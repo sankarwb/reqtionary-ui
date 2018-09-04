@@ -4,8 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
 import { SharedModule } from '../shared/shared.module';
-import { HomeComponent } from './components/home.component';
+import {
+    HomeComponent,
+    HomeApplicationComponent,
+    HomeProjectComponent
+} from './components';
 import { HomeService } from './services/home.service';
+import { EmployeeService } from '../services';
 
 const routes: Routes = [
     {path: '', component: HomeComponent}
@@ -19,10 +24,13 @@ const routes: Routes = [
         SharedModule
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
+        HomeApplicationComponent,
+        HomeProjectComponent
     ],
     providers: [
-        HomeService
+        HomeService,
+        EmployeeService
     ]
 })
 

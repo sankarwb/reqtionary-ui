@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../node_modules/@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-reqtionary',
@@ -10,10 +9,4 @@ import { Router } from '../../../node_modules/@angular/router';
     </div>
   `
 })
-export class ReqtionaryComponent implements OnInit {
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    this.router.navigateByUrl('/app/home');
-  }
-}
+export class ReqtionaryComponent {}

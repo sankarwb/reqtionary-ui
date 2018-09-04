@@ -3,7 +3,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'app-search-box',
     template: `
-    <div style="border-radius: 2px; box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.10); padding: 0 5px;">
+    <div style="border-radius: 4px; box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.10); padding: 0 5px;">
         <input type="text" class="search-input" placeholder="Type in something to search" (input)="inputChange($event)">
         <mat-icon class="search-icon">search</mat-icon>
     </div>

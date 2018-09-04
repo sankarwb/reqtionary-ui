@@ -4,10 +4,10 @@ import { EventsService, GlobalSharedService } from '../../services';
 @Component({
   selector: 'app-header',
   template: `
-    <div style="display: flex; align-items: stretch; height: 75px;">
+    <div style="display: flex; align-items: stretch; height: 75px; font-size: 16px;">
         <div style="display: flex; align-items: center;">
             <a mat-button routerLink=".">
-                <strong style="color: var(--theme-color);" [style.fontSize]="(appSelected?30:20)+'px'">
+                <strong style="color: var(--theme-color);" [style.fontSize]="(appSelected?40:26)+'px'">
                     {{appSelected?' W ':' WINDBRICKS '}}
                 </strong>
             </a>
@@ -29,7 +29,7 @@ import { EventsService, GlobalSharedService } from '../../services';
         display: flex;
         align-items: center;
         flex: 1;
-        border-bottom-left-radius: 16px;
+        border-bottom-left-radius: 20px;
         box-shadow: -5px 0px 20px rgb(0, 0, 0, 0.05);
         color: var(--theme-color);
       }`,

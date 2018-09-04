@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { HeaderComponent } from './components/header.component';
 import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
-import { SearchBoxComponent } from './components/search-box.component';
+
+import {
+  HeaderComponent,
+  SearchBoxComponent,
+  RecentActivityComponent
+} from './components';
 
 @NgModule({
   imports: [
@@ -11,12 +14,16 @@ import { SearchBoxComponent } from './components/search-box.component';
     AngularMaterialModule
   ],
   exports: [
+    CommonModule,
+    AngularMaterialModule,
     HeaderComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    RecentActivityComponent
   ],
   declarations: [
     HeaderComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    RecentActivityComponent
   ],
   providers: []
 })
