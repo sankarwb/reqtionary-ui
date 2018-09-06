@@ -2,7 +2,9 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { HomeService } from '../services/home.service';
 import { Application } from '../../models/application.model';
-import { Project } from '../../models/project.model';
+import { GlobalSharedService } from '../../services';
+import { Release } from '../../models/release.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'home-application',
@@ -16,32 +18,34 @@ import { Project } from '../../models/project.model';
                 <a>members</a>
             </div>
             <div style="spacing-horizontal-flexbox">
-                <a>Agile Board</a>
-                <a>Defects</a>
-                <a>Backlog</a>
-                <a>Permanent Documentation</a>
+                <a (click)="routeToArtifacts('agile')">Agile Board</a>
+                <a (click)="routeToArtifacts('defects')">Defects</a>
+                <a (click)="routeToArtifacts('backlog')">Backlog</a>
+                <a (click)="routeToArtifacts('perm.doc')">Permanent Documentation</a>
             </div>
         </div>
-        <div style="display: flex; flex-direction: row; margin-top: 3%;">
-            <div style="width: 99%; border-top: 1px solid #E5E8E8;">
-                <span style="position: relative; top: -10px; background: #ffffff; padding: 6px;">Sprints</span>
-                <span style="position: relative; top: -25px; left: 23%; background: #ffffff; padding: 6px;">
-                    <input type="radio" id="activeRadio" name="projectsGroup{{application.id}}" checked>
-                    <label for="activeRadio">Active</label>
-                </span>
-                <span style="position: relative; top: -25px; left: 23%; background: #ffffff; padding: 6px;">
-                    <input type="radio" id="completedRadio" name="projectsGroup{{application.id}}">
-                    <label for="completedRadio">Completed</label>
-                </span>
-                <span style="position: relative; top: -10px; left: 40%; background: #ffffff; padding: 6px;">My Recent Activity</span>
+        <span *ngFor="let release of releases;">
+            <div style="display: flex; flex-direction: row; margin-top: 3%;">
+                <div style="width: 99%; border-top: 1px solid #E5E8E8; display:">
+                    <span style="position: relative; top: -10px; background: #ffffff; padding: 6px;">{{release.name}}</span>
+                    <span style="position: relative; top: -25px; left: 23%; background: #ffffff; padding: 6px;">
+                        <input type="radio" id="activeRadio" name="projectsGroup{{release.id}}" checked>
+                        <label for="activeRadio">Active</label>
+                    </span>
+                    <span style="position: relative; top: -25px; left: 23%; background: #ffffff; padding: 6px;">
+                        <input type="radio" id="completedRadio" name="projectsGroup{{release.id}}">
+                        <label for="completedRadio">Completed</label>
+                    </span>
+                    <span style="position: relative; top: -10px; left: 40%; background: #ffffff; padding: 6px;">My Recent Activity</span>
+                </div>
             </div>
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <div style="display: flex; flex-direction: column; width: 116%; margin-top: 1%;">
-                <home-project *ngFor="let project of projects;" [project]="project"></home-project>
+            <div style="display: flex; flex-direction: row;">
+                <div style="display: flex; flex-direction: column; width: 116%; margin-top: 1%;">
+                    <home-project *ngFor="let project of release.projects" [project]="project"></home-project>
+                </div>
+                <recent-activity></recent-activity>
             </div>
-            <recent-activity></recent-activity>
-        </div>
+        </span>
     </div>
     `,
     styles: [
@@ -81,15 +85,23 @@ import { Project } from '../../models/project.model';
 
 export class HomeApplicationComponent implements OnInit, OnDestroy {
 
-    constructor(private homeService: HomeService) {}
+    constructor(
+        private homeService: HomeService,
+        private globalService: GlobalSharedService,
+        private router: Router
+    ) {}
 
     @Input() application: Application;
-    private projects: Project[];
+    private releases: Release[];
 
     ngOnInit() {
-        const subscription = this.homeService.getProjectsByApplication(this.application.id)
-                                .subscribe(projects => this.projects = projects);
+        const subscription = this.homeService.getProjectsByApplication(this.globalService.user.id, this.application.id)
+                                .subscribe(releases => this.releases = releases);
         this.homeService.subscriptions.push(subscription);
+    }
+
+    routeToArtifacts(route: string): void {
+        this.router.navigateByUrl(`/home/${this.globalService.user.id}/${route}`);
     }
 
     ngOnDestroy() {

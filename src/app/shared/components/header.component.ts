@@ -1,26 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService, GlobalSharedService } from '../../services';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
+import { GlobalSharedService } from '../../services';
 
 @Component({
   selector: 'app-header',
   template: `
     <div style="display: flex; align-items: stretch; height: 75px; font-size: 16px;">
         <div style="display: flex; align-items: center;">
-            <a mat-button routerLink=".">
-                <strong style="color: var(--theme-color);" [style.fontSize]="(appSelected?40:26)+'px'">
-                    {{appSelected?' W ':' WINDBRICKS '}}
+            <a mat-button routerLink="/home/31">
+                <strong style="color: var(--theme-color);font-weight: bold;" [style.fontSize]="(resizeLogo?40:26)+'px'">
+                    {{resizeLogo?' W ':' WINDBRICKS '}}
                 </strong>
             </a>
         </div>
         <div class="header-items-container">
-            <a mat-button style="padding-left: 5px;">Home</a>
-            <a mat-button style="padding-left: 5px;">Org Chart</a>
-            <app-search-box (searchTextChange)="searchChange($event)"></app-search-box>
-        </div>
-        <div style="display: flex; align-items: center; padding-right: 15px;">
-            <label style="padding-right: 10px;">{{globalService.user?.firstName}} {{globalService.user?.lastName}}</label>
-            <img src="../../../assets/user_thumbnail.jpg" class="thumbnail">
-            <mat-icon style="color: var(--theme-color);">expand_more</mat-icon>
+            <div style="display: flex; flex-direction: row; flex: 1;">
+                <a mat-button style="padding-left: 5px;">Home</a>
+                <a mat-button style="padding-left: 5px;">Org Chart</a>
+                <app-search-box (searchTextChange)="searchChange($event)"></app-search-box>
+            </div>
+            <div style="display: flex; align-items: center; padding-right: 15px;">
+                <label style="padding-right: 10px;">{{globalService.user?.firstName}} {{globalService.user?.lastName}}</label>
+                <img src="../../../assets/user_thumbnail.jpg" class="thumbnail">
+                <mat-icon style="color: var(--theme-color);">expand_more</mat-icon>
+            </div>
         </div>
     </div>
   `,
@@ -28,7 +33,7 @@ import { EventsService, GlobalSharedService } from '../../services';
       `.header-items-container {
         display: flex;
         align-items: center;
-        flex: 1;
+        width: 100%;
         border-bottom-left-radius: 20px;
         box-shadow: -5px 0px 20px rgb(0, 0, 0, 0.05);
         color: var(--theme-color);
@@ -45,16 +50,18 @@ import { EventsService, GlobalSharedService } from '../../services';
 })
 export class HeaderComponent implements OnInit {
     constructor(
-        private eventsService: EventsService,
+        private router: Router,
         private globalService: GlobalSharedService
-    ) {}
+    ) {
+        this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+            this.resizeLogo = (event.url.split('/').length > 3);
+        });
+    }
 
-    private appSelected: string;
+    private resizeLogo: boolean;
 
     ngOnInit() {
-        this.eventsService.appSelectionChange.subscribe((appselected: string) => {
-            this.appSelected = appselected;
-        });
+        
     }
 
     searchChange(searchTxt: string): void {

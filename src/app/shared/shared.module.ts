@@ -7,14 +7,17 @@ import {
   SearchBoxComponent,
   RecentActivityComponent
 } from './components';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     AngularMaterialModule
   ],
   exports: [
     CommonModule,
+    FormsModule,
     AngularMaterialModule,
     HeaderComponent,
     SearchBoxComponent,

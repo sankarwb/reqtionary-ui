@@ -9,7 +9,6 @@ export class EventsService {
     constructor() {}
 
     private alertMessage$ = new Subject<AlertMessage>();
-    private appSelection$ = new Subject<string>();
 
     get alertMessages(): Observable<AlertMessage> {
         return this.alertMessage$.asObservable();
@@ -17,13 +16,5 @@ export class EventsService {
 
     alert(message: AlertMessage): void {
         this.alertMessage$.next(message);
-    }
-
-    get appSelectionChange(): Observable<string> {
-        return this.appSelection$.asObservable();
-    }
-
-    appSelected(appName: string): void {
-        this.appSelection$.next(appName);
     }
 }

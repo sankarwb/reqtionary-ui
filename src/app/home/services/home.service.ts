@@ -5,7 +5,7 @@ import { Subscription, Observable } from 'rxjs';
 import { GlobalSharedService, EmployeeService } from '../../services';
 import { Application } from '../../models/application.model';
 import { applicationsByUser, projectsByapplication } from '../../endpoints';
-import { Project } from '../../models/project.model';
+import { Release } from '../../models/release.model';
 
 @Injectable()
 export class HomeService {
@@ -28,8 +28,8 @@ export class HomeService {
         return this.http.get<Application[]>(`${applicationsByUser}${userId}`);
     }
 
-    getProjectsByApplication(applicationId: number): Observable<Project[]> {
-        return this.http.get<Project[]>(`${projectsByapplication}${applicationId}`);
+    getProjectsByApplication(userId: number, applicationId: number): Observable<Release[]> {
+        return this.http.get<Release[]>(`${projectsByapplication}${userId}/${applicationId}`);
     }
 
     unsubscribe() {

@@ -31,7 +31,3 @@ a {
     color: var(--theme-color);
     cursor: pointer;
 }
-
-a:hover {
-    text-decoration: underline;
-}
