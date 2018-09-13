@@ -5,7 +5,8 @@ import { AngularMaterialModule } from '../angularmaterial/angular-material.modul
 import {
   HeaderComponent,
   SearchBoxComponent,
-  RecentActivityComponent
+  RecentActivityComponent,
+  DataGridComponent
 } from './components';
 import { FormsModule } from '@angular/forms';
 
@@ -21,12 +22,14 @@ import { FormsModule } from '@angular/forms';
     AngularMaterialModule,
     HeaderComponent,
     SearchBoxComponent,
-    RecentActivityComponent
+    RecentActivityComponent,
+    DataGridComponent
   ],
   declarations: [
     HeaderComponent,
     SearchBoxComponent,
-    RecentActivityComponent
+    RecentActivityComponent,
+    DataGridComponent
   ],
   providers: []
 })

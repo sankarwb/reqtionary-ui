@@ -101,7 +101,7 @@ export class HomeApplicationComponent implements OnInit, OnDestroy {
     }
 
     routeToArtifacts(route: string): void {
-        this.router.navigateByUrl(`/home/${this.globalService.user.id}/${route}`);
+        this.router.navigateByUrl(`/home/${this.globalService.user.id}/${route}/${this.application.id}`);
     }
 
     ngOnDestroy() {

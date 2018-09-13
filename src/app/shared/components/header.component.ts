@@ -23,7 +23,7 @@ import { GlobalSharedService } from '../../services';
             </div>
             <div style="display: flex; align-items: center; padding-right: 15px;">
                 <label style="padding-right: 10px;">{{globalService.user?.firstName}} {{globalService.user?.lastName}}</label>
-                <img src="../../../assets/user_thumbnail.jpg" class="thumbnail">
+                <img src="./../../../assets/user_thumbnail.jpg" class="user-thumbnail">
                 <mat-icon style="color: var(--theme-color);">expand_more</mat-icon>
             </div>
         </div>
@@ -35,17 +35,9 @@ import { GlobalSharedService } from '../../services';
         align-items: center;
         width: 100%;
         border-bottom-left-radius: 20px;
-        box-shadow: -5px 0px 20px rgb(0, 0, 0, 0.05);
+        box-shadow: -5px 0px 20px rgb(0, 0, 0, 0.12);
         color: var(--theme-color);
-      }`,
-      `.thumbnail {
-        max-width: 36px;
-        height: auto;
-        margin-right: 10px;
-        border-radius: 50%;
-        border: 1px solid var(--theme-color);
-      }
-      `
+      }`
   ]
 })
 export class HeaderComponent implements OnInit {

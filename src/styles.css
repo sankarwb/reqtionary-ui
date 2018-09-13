@@ -12,6 +12,7 @@
     --theme-color: #4DB2F3;
     --heading-text-color: #262626;
     --descriptive-text-color: #70757B;
+    --border-line-color: #E5E8E8;;
 }
 
 * {
@@ -30,4 +31,13 @@ body {
 a {
     color: var(--theme-color);
     cursor: pointer;
+}
+
+.user-thumbnail {
+    max-width: 36px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--theme-color);
+    background: url(./assets/user_thumbnail.jpg) no-repeat;
 }

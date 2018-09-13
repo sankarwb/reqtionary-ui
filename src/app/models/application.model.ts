@@ -1,5 +1,6 @@
-export class Application {
-    id: number;
-    name: string;
-    description: string;
+import { BaseModel } from "./base.model";
+
+export class Application extends BaseModel {
+    divId: number;
+    appGroupId: number;
 }

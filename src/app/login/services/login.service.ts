@@ -18,7 +18,7 @@ export class LoginService {
     ) {}
 
     validateCredentials(request: LoginRequest): Subscription {
-        return this.http.get<Employee>(authenticate).subscribe(response => this.userDetails(response));
+        return this.http.post<Employee>(authenticate, request).subscribe(response => this.userDetails(response));
     }
 
     userDetails(employee: Employee): void {

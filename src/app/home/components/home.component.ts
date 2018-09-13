@@ -19,7 +19,7 @@ import { Application } from '../../models/application.model';
         `.welcome-container {
             display: flex; flex-direction: column; margin-top: 1%; margin-left: 1%;
             color: var(--descriptive-text-color);
-            border-bottom: 1px solid #E5E8E8;
+            border-bottom: 1px solid var(--border-line-color);
         }`
     ]
 })
@@ -30,9 +30,9 @@ export class HomeComponent implements OnDestroy {
         private activatedRoute: ActivatedRoute,
         private homeService: HomeService
     ) {
-        this.activatedRoute.params.subscribe(routeParams => {
-            this.homeService.getUser(routeParams.userId);
-            const subscription = this.homeService.getApplicationsByUser(routeParams.userId)
+        this.activatedRoute.params.subscribe(params => {
+            this.homeService.getUser(params.userId);
+            const subscription = this.homeService.getApplicationsByUser(params.userId)
                                     .subscribe(applications => this.applications = applications);
             this.homeService.subscriptions.push(subscription);
         });
