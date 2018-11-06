@@ -1,22 +1,26 @@
 // common endpoints
-export const authenticate = 'authenticate';
+export let authenticate = '/authenticate';
 
 // artifact
-export const artifacts = 'artifacts/list/';
-export const artifactCreate = 'artifacts/create';
-export const artifactEdit = 'artifacts/edit/';
-export const artifactDelete = 'artifacts/delete/';
-export const parentArtifactsByApplication = 'artifacts/parent/byApplication/';
+export let artifacts = '/artifacts';
+export let agileArtifacts = '/artifacts/agile-artifacts';
+export let parentArtifactsByApplication = '/artifacts/parent-artifacts/byApplication/:applicationId';
+
+// artifact history
+export let recentActivity = '/artifact-history/recent-activity/byApplication/:applicationId';
 
 // employee
-export const userById = 'employees/';
-export const usersByApplication = 'employees/byApplication/';
+export let employeeById = '/employees/:employeeId';
+export let employeesByApplication = '/employees/byApplication/:applicationId';
 
 // application
-export const applicationsByUser = 'applications/byUser/';
+export let applicationsByEmployee = '/applications/byEmployee/:employeeId';
 
 // project
-export const projectsByapplication = 'projects/byApplication/';
+export let projectsByApplication = '/projects/projectsGroupbyRelease/:applicationId';
 
 // requirement types
-export const requirementtypesByApplication = 'requirementtype/byApplication/';
+export let requirementTypesByApplication = '/requirement-type/byApplication/:applicationId';
+
+// agile
+export let agileStatusesByApplication = '/application-agile-status/statuses/byApplication/:applicationId';

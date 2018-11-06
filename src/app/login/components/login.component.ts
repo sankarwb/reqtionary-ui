@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { LoginService } from '../services/login.service';
 import { LoginRequest } from '../models/login-request.model';
@@ -78,15 +77,11 @@ export class LoginComponent implements OnDestroy {
 
     constructor(private loginService: LoginService) {}
 
-    private subscription: Subscription;
-
     login(form: NgForm) {
-        this.subscription = this.loginService.validateCredentials(new LoginRequest(form.value.email, form.value.password));
+        this.loginService.validateCredentials(new LoginRequest(form.value.email, form.value.password));
     }
 
     ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
+        
     }
 }

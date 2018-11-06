@@ -1,16 +1,23 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+    Component,
+    OnDestroy,
+    ViewChildren,
+    QueryList
+} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
 
-import { HomeService } from '../services/home.service';
-import { Application } from '../../models/application.model';
+import {GlobalSharedService} from '../../services/global-shared.service';
+import {HomeApplicationComponent} from './home-application.component';
+import {Application} from '../../models/application.model';
 
 @Component({
     selector: 'app-home',
     template: `
     <div style="display: flex; flex-direction: column;">
         <div class="welcome-container">
-            <span style="font-size: 32px;">Hello, {{homeService.globalService.user?.firstName}} {{homeService.globalService.user?.lastName}}</span>
-            <p style="font-size: 16px;">you are involved with (4) projects. Here you can track how is going with all your projects.</p>
+            <span style="font-size: 32px;">Hello, {{globalService.employee?.firstName}} {{globalService.employee?.lastName}}</span>
+            <p style="font-size: 16px;">you are involved with (<span style="color: var(--theme-color);">{{getProjectsCount()|async}}</span>) projects. Here you can track how is going with all your projects.</p>
         </div>
         <home-application *ngFor="let application of applications;" [application]="application"></home-application>
     </div>
@@ -26,21 +33,32 @@ import { Application } from '../../models/application.model';
 
 export class HomeComponent implements OnDestroy {
 
+    @ViewChildren(HomeApplicationComponent) applicationComponents: QueryList<HomeApplicationComponent>;
+    private applications: Application[];
+
     constructor(
         private activatedRoute: ActivatedRoute,
-        private homeService: HomeService
+        private globalService: GlobalSharedService
     ) {
-        this.activatedRoute.params.subscribe(params => {
-            this.homeService.getUser(params.userId);
-            const subscription = this.homeService.getApplicationsByUser(params.userId)
-                                    .subscribe(applications => this.applications = applications);
-            this.homeService.subscriptions.push(subscription);
+        this.applications = this.activatedRoute.snapshot.data['applications'];
+    }
+
+    getProjectsCount(): Observable<number> {
+        return new Observable(observer => {
+            let count = 0;
+            if (this.applicationComponents && this.applicationComponents.length) {
+                this.applicationComponents.forEach(component => {
+                    component.releases.forEach(release => {
+                        count += release.projects.length;
+                    });
+                });
+            }
+            observer.next(count);
+            observer.complete();
         });
     }
 
-    private applications: Application[];
-
     ngOnDestroy() {
-        this.homeService.unsubscribe();
+        
     }
 }

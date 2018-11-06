@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ReqtionaryComponent } from './reqtionary.component';
+import {NgModule} from '@angular/core';
+import {
+    Routes,
+    RouterModule
+} from '@angular/router';
+import {ReqtionaryComponent} from './reqtionary.component';
 
 const routes: Routes = [
     { path: '', component: ReqtionaryComponent,
         children: [
-            { path: ':userId', loadChildren: '../home/home.module#HomeModule' }
+            { path: ':employeeId', loadChildren: '../home/home.module#HomeModule' }
         ]
     }
 ];

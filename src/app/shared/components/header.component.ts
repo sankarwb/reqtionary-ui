@@ -22,7 +22,7 @@ import { GlobalSharedService } from '../../services';
                 <app-search-box (searchTextChange)="searchChange($event)"></app-search-box>
             </div>
             <div style="display: flex; align-items: center; padding-right: 15px;">
-                <label style="padding-right: 10px;">{{globalService.user?.firstName}} {{globalService.user?.lastName}}</label>
+                <label style="padding-right: 10px;">{{globalService.employee?.firstName}} {{globalService.employee?.lastName}}</label>
                 <img src="./../../../assets/user_thumbnail.jpg" class="user-thumbnail">
                 <mat-icon style="color: var(--theme-color);">expand_more</mat-icon>
             </div>

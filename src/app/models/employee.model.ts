@@ -8,4 +8,6 @@ export class Employee {
     middleName: string;
     lastName: string;
     email: string;
+    token: string;
+    expires: string;
 }

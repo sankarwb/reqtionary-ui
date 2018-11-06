@@ -1,10 +1,19 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    OnDestroy
+} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
-import { HomeService } from '../services/home.service';
-import { Application } from '../../models/application.model';
-import { GlobalSharedService } from '../../services';
-import { Release } from '../../models/release.model';
-import { Router } from '@angular/router';
+import {ProjectsService} from '../../shared/services/projects.service';
+import {GlobalSharedService} from '../../services';
+import {
+    Application,
+    Project,
+    Release
+} from '../../models';
 
 @Component({
     selector: 'home-application',
@@ -19,14 +28,14 @@ import { Router } from '@angular/router';
             </div>
             <div style="spacing-horizontal-flexbox">
                 <a (click)="routeToArtifacts('agile')">Agile Board</a>
-                <a (click)="routeToArtifacts('defects')">Defects</a>
-                <a (click)="routeToArtifacts('backlog')">Backlog</a>
-                <a (click)="routeToArtifacts('perm.doc')">Permanent Documentation</a>
+                <a (click)="routeToArtifacts('defects')" *ngIf="defectProject">Defects</a>
+                <a (click)="routeToArtifacts('backlog')" *ngIf="backlogProject">Backlog</a>
+                <a (click)="routeToArtifacts('perm.doc')" *ngIf="permdocProject">Permanent Documentation</a>
             </div>
         </div>
-        <span *ngFor="let release of releases;">
+        <span *ngFor="let release of filterHiddenReleases(releases);">
             <div style="display: flex; flex-direction: row; margin-top: 3%;">
-                <div style="width: 99%; border-top: 1px solid #E5E8E8; display:">
+                <div style="width: 99%; border-top: 1px solid #E5E8E8;">
                     <span style="position: relative; top: -10px; background: #ffffff; padding: 6px;">{{release.name}}</span>
                     <span style="position: relative; top: -25px; left: 23%; background: #ffffff; padding: 6px;">
                         <input type="radio" id="activeRadio" name="projectsGroup{{release.id}}" checked>
@@ -41,7 +50,7 @@ import { Router } from '@angular/router';
             </div>
             <div style="display: flex; flex-direction: row;">
                 <div style="display: flex; flex-direction: column; width: 116%; margin-top: 1%;">
-                    <home-project *ngFor="let project of release.projects" [project]="project"></home-project>
+                    <home-project *ngFor="let project of filterHiddenProjects(release.projects);" [project]="project"></home-project>
                 </div>
                 <recent-activity></recent-activity>
             </div>
@@ -85,26 +94,64 @@ import { Router } from '@angular/router';
 
 export class HomeApplicationComponent implements OnInit, OnDestroy {
 
+    private subscription: Subscription;
+    @Input() application: Application;
+    private defectProject: number;
+    private backlogProject: number;
+    private permdocProject: number;
+    releases: Release[] = [];
+
     constructor(
-        private homeService: HomeService,
+        private projectsService: ProjectsService,
         private globalService: GlobalSharedService,
         private router: Router
     ) {}
 
-    @Input() application: Application;
-    private releases: Release[];
-
     ngOnInit() {
-        const subscription = this.homeService.getProjectsByApplication(this.globalService.user.id, this.application.id)
-                                .subscribe(releases => this.releases = releases);
-        this.homeService.subscriptions.push(subscription);
+        this.subscription = this.projectsService.getProjectsByApplication(this.application.id)
+                                .subscribe(releases => {
+                                    this.releases = releases;
+                                    this.findHiddenProjects(this.releases);
+                                });
     }
 
     routeToArtifacts(route: string): void {
-        this.router.navigateByUrl(`/home/${this.globalService.user.id}/${route}/${this.application.id}`);
+        this.router.navigateByUrl(`/home/${this.globalService.employee.id}/${route}/${this.application.id}`);
+    }
+
+    filterHiddenProjects(projects: Project[]): Project[] {
+        return projects.filter(project => [-1,-2,-3].indexOf(project.type) === -1);
+    }
+
+    filterHiddenReleases(releases: Release[]): Release[] {
+        return releases.filter(release => release.type === 0);
+    }
+
+    findHiddenProjects(releases: Release[]) {
+        if (releases && releases.length) {
+            releases.forEach(release => {
+                if (release._active) {
+                    release.projects.forEach(project => {
+                        switch (project.type) {
+                            case -1:
+                                this.defectProject = project.id;
+                                break;
+                            case -2:
+                                this.backlogProject = project.id;
+                                break;
+                            case -3:
+                                this.permdocProject = project.id;
+                                break;
+                        }
+                    })
+                }
+            })
+        }
     }
 
     ngOnDestroy() {
-
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

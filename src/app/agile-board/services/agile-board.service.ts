@@ -4,14 +4,17 @@ import { Observable, Subscription } from "rxjs";
 
 import { GlobalSharedService } from "../../services";
 import {
-    requirementtypesByApplication,
-    parentArtifactsByApplication
+    requirementTypesByApplication,
+    parentArtifactsByApplication,
+    agileStatusesByApplication,
+    artifacts
 } from '../../endpoints';
-import { RequirementType } from "../../models/Requirement-type.model";
+import { RequirementType } from "../../models/requirement-type.model";
 import { Artifact } from "../../models/artifact.model";
+import { AgileStatus } from "../../models/agile-status.model";
 
 @Injectable()
-export class ArtifactsService {
+export class AgileBoardService {
     constructor(
         private http: HttpClient,
         private globalService: GlobalSharedService
@@ -19,13 +22,6 @@ export class ArtifactsService {
 
     subscriptions: Subscription[] = [];
 
-    requirementtypes(applicationId: number): Observable<RequirementType[]> {
-        return this.http.get<RequirementType[]>(`${requirementtypesByApplication}${applicationId}`);
-    }
-
-    parentArtifacts(applicationId: number): Observable<Artifact[]> {
-        return this.http.get<Artifact[]>(`${parentArtifactsByApplication}${applicationId}`);
-    }
     unsubscribe() {
         while(this.subscriptions.length !== 0) {
             this.subscriptions.pop().unsubscribe();

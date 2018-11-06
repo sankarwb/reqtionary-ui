@@ -1,20 +1,23 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {
+    Routes,
+    RouterModule
+} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
-import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
-import { SharedModule } from '../shared/shared.module';
+import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
+import {SharedModule} from '../shared/shared.module';
 import {
     HomeComponent,
     HomeApplicationComponent,
     HomeProjectComponent
 } from './components';
-import { HomeService } from './services/home.service';
-import { EmployeeService } from '../services';
+import {HomeService} from './services/home.service';
+import {HomeResolver} from './resolvers/home.resolver';
 
 const routes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'agile', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: '', component: HomeComponent, resolve: {applications: HomeResolver}},
+    {path: 'agile', loadChildren: '../agile-board/agile-board.module#AgileBoardModule'},
     {path: 'defects', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
     {path: 'backlog', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
     {path: 'perm.doc', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'}
@@ -34,7 +37,7 @@ const routes: Routes = [
     ],
     providers: [
         HomeService,
-        EmployeeService
+        HomeResolver
     ]
 })
 

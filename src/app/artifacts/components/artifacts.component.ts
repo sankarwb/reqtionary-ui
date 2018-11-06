@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
-import { ArtifactsService } from "../services";
-import { HomeService } from "../../home/services/home.service";
+import { ArtifactsService } from "../../shared/services";
+import { Artifact } from "../../models/artifact.model";
+import { AgileStatus } from "../../models/agile-status.model";
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'artifacts',
@@ -11,40 +13,55 @@ import { HomeService } from "../../home/services/home.service";
 export class ArtifactsComponent implements OnInit, OnDestroy {
     constructor(
         private activatedRoute: ActivatedRoute,
-        private homeService: HomeService,
         private artifactsService: ArtifactsService
     ) {
-        this.activatedRoute.params.subscribe(params => {
-            this.homeService.getUser(params.userId);
+        const subscription = this.activatedRoute.params.subscribe(routeParams => {
+            this.applicationId = routeParams.applicationId;
+            this.artifactsService.agileStatuses(this.applicationId).subscribe(agileStatuses => this.agileStatuses = agileStatuses);
         });
-        const subscription = this.activatedRoute.params.subscribe(routeParams => this.applicationId = routeParams.applicationId);
         this.artifactsService.subscriptions.push(subscription);
     }
 
     private applicationId: number;
+    private projectId: number;
+    private parentArtifactId: number;
+    private assignedTo: number;
+    private agileStatuses: AgileStatus[];
+    private artifacts: Artifact[];
 
     ngOnInit() {
         
     }
 
-    onAssignedtoChange(assignedTo: string): void {
-
+    onAssignedtoChange(assignedTo: number): void {
+        this.assignedTo = assignedTo;
+        this.getArtifacts();
     }
 
-    onApplicationChange(application: string): void {
-        
+    onEpicChange(epicId: number): void {
+        this.parentArtifactId = epicId;
+        this.getArtifacts();
     }
-    
-    onProjectChange(project: string): void {
-        
-    }
-    
-    onSprintChange(sprint: string): void {
-        
+
+    onSprintChange(sprintId: number): void {
+        this.projectId = sprintId;
+        this.getArtifacts();
     }
     
     onLayoutChange(layout: string): void {
         
+    }
+
+    getArtifacts() {
+        this.artifactsService.artifacts(this.applicationId, this.projectId, this.parentArtifactId, this.assignedTo).subscribe(artifacts => this.artifacts = artifacts);
+    }
+
+    artifactsByStatus(status: string): Observable<Artifact[]> {
+        return Observable.create(observer => {
+            let artifactsByStatus = this.artifacts.filter(artifact => artifact.status === status);
+            observer.next(artifactsByStatus);
+            observer.complete();
+        })
     }
 
     ngOnDestroy() {

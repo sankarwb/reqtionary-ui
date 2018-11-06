@@ -1,14 +1,22 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
+import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
 import {
   HeaderComponent,
   SearchBoxComponent,
   RecentActivityComponent,
-  DataGridComponent
+  DataGridComponent,
+  SpinnerComponent,
+  ArtifactFiltersComponent,
+  ArtifactReqtypesComponent
 } from './components';
-import { FormsModule } from '@angular/forms';
+import {
+  ArtifactsService,
+  EmployeeService,
+  ProjectsService
+} from './services';
 
 @NgModule({
   imports: [
@@ -23,14 +31,24 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     SearchBoxComponent,
     RecentActivityComponent,
-    DataGridComponent
+    DataGridComponent,
+    SpinnerComponent,
+    ArtifactFiltersComponent,
+    ArtifactReqtypesComponent
   ],
   declarations: [
     HeaderComponent,
     SearchBoxComponent,
     RecentActivityComponent,
-    DataGridComponent
+    DataGridComponent,
+    SpinnerComponent,
+    ArtifactFiltersComponent,
+    ArtifactReqtypesComponent
   ],
-  providers: []
+  providers: [
+    ArtifactsService,
+    EmployeeService,
+    ProjectsService
+  ]
 })
 export class SharedModule { }

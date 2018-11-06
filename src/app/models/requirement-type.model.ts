@@ -1,4 +1,6 @@
-export class RequirementType {
+import {BaseModel} from "./base.model";
+
+export class RequirementType extends BaseModel {
     parentId: number;
     system: number;
     code: string;
