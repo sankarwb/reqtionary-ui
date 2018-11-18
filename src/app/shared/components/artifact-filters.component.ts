@@ -3,57 +3,71 @@ import {
     Input,
     OnInit,
     Output,
-    EventEmitter
+    EventEmitter,
+    ViewChild
 } from "@angular/core";
+import {MatButtonToggleGroup} from "@angular/material";
 
 import {
     ArtifactsService,
     EmployeeService,
     ProjectsService
 } from "../services";
-import { Release } from "../../models/release.model";
-import { Employee } from "../../models/employee.model";
-import { Artifact } from "../../models/artifact.model";
-import { Project } from "../../models/project.model";
+import {
+    Release,
+    Employee,
+    Artifact,
+    Project
+} from "../../models";
 
 @Component({
     selector: 'artifact-filters',
     template: `
-    <div class="filters-container">
-        <div>
-            <span>Assigned To</span>
-            <select (change)="onAssignedtoChange($event)">
-                <option>Show All</option>
-                <option *ngFor="let employee of employees;" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
-            </select>
+    <div class="flex-box-row">
+        <div class="flex-box-column-justify-center filters-container" style="width: 60%;">
+            <div>
+                <span>Assigned To</span>
+                <select (change)="onAssignedtoChange($event)">
+                    <option>Show All</option>
+                    <option *ngFor="let employee of employees;" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
+                </select>
+            </div>
+            <div>
+                <span>Epic</span>
+                <select (change)="onEpicChange($event)">
+                    <option>Show All</option>
+                    <option *ngFor="let artifact of parentArtifacts;" [value]="artifact.id">{{artifact.name}}</option>
+                </select>
+            </div>
         </div>
-        <div>
-            <span>Sprint</span>
-            <mat-menu #releasesMenu="matMenu" width="200" yPosition="below">
-                <ng-container *ngFor="let release of releases;">
-                    <button mat-menu-item [matMenuTriggerFor]="projectsMenu">{{release.name}}</button>
-                    <mat-menu #projectsMenu="matMenu">
-                        <button mat-menu-item *ngFor="let project of release.projects;" (click)="onSprintChange(project)">{{project.name}}</button>
-                    </mat-menu>
-                </ng-container>
-            </mat-menu>
-            <button mat-button [matMenuTriggerFor]="releasesMenu">{{selectedStrint.name}}</button>
-        </div>
-        <div>
-            <span>Epic</span>
-            <select (change)="onEpicChange($event)">
-                <option>Show All</option>
-                <option *ngFor="let artifact of parentArtifacts;" [value]="artifact.id">{{artifact.name}}</option>
-            </select>
+        <div class="flex-box-column-justify-center filters-container" style="width: 40%;">
+            <div>
+                <span>Sprint</span>
+                <mat-menu #releasesMenu="matMenu" width="200" yPosition="below">
+                    <ng-container *ngFor="let release of releases;">
+                        <button mat-menu-item [matMenuTriggerFor]="projectsMenu">{{release.name}}</button>
+                        <mat-menu #projectsMenu="matMenu">
+                            <button mat-menu-item *ngFor="let project of release.projects;" (click)="onSprintChange(project)">{{project.name}}</button>
+                        </mat-menu>
+                    </ng-container>
+                </mat-menu>
+                <button mat-button [matMenuTriggerFor]="releasesMenu">{{selectedStrint.name}}</button>
+            </div>
+            <div style="text-align: center;">
+                <mat-button-toggle-group #group="matButtonToggleGroup">
+                    <mat-button-toggle value="card">
+                        <mat-icon>apps</mat-icon>
+                    </mat-button-toggle>
+                    <mat-button-toggle value="list">
+                        <mat-icon>list</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
         </div>
     </div>
     `,
     styles: [
-        `.filters-container {
-            display: flex; flex-direction: row; flex-wrap: wrap;
-        }`,
         `.filters-container div {
-            width: 50%;
             text-align: right;
             margin-bottom: 3%;
         }`,
@@ -91,6 +105,7 @@ export class ArtifactFiltersComponent implements OnInit {
         this.selectedStrint.name = 'Select Strint';
     }
 
+    @ViewChild('group') btnsToggleGroup: MatButtonToggleGroup;
     @Input() 
     private applicationId: number;
     private selectedStrint: Project;
@@ -104,6 +119,7 @@ export class ArtifactFiltersComponent implements OnInit {
     @Output() changeLayout = new EventEmitter<string>();
 
     ngOnInit() {
+        this.btnsToggleGroup.value = 'card';
         const releasesSubscription = this.projectsService.getProjectsByApplication(this.applicationId)
             .subscribe(releases => {
                 this.releases = releases;

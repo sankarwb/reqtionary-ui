@@ -10,7 +10,9 @@ import {
   DataGridComponent,
   SpinnerComponent,
   ArtifactFiltersComponent,
-  ArtifactReqtypesComponent
+  ArtifactReqtypesComponent,
+  UserThumbnailComponent,
+  NavigationPanelComponent
 } from './components';
 import {
   ArtifactsService,
@@ -34,7 +36,9 @@ import {
     DataGridComponent,
     SpinnerComponent,
     ArtifactFiltersComponent,
-    ArtifactReqtypesComponent
+    ArtifactReqtypesComponent,
+    UserThumbnailComponent,
+    NavigationPanelComponent
   ],
   declarations: [
     HeaderComponent,
@@ -43,7 +47,9 @@ import {
     DataGridComponent,
     SpinnerComponent,
     ArtifactFiltersComponent,
-    ArtifactReqtypesComponent
+    ArtifactReqtypesComponent,
+    UserThumbnailComponent,
+    NavigationPanelComponent
   ],
   providers: [
     ArtifactsService,

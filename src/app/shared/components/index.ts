@@ -5,3 +5,5 @@ export * from './data-grid.component';
 export * from './spinner.component';
 export * from './artifact-reqtypes.component';
 export * from './artifact-filters.component';
+export * from './user-thumbnail.component';
+export * from './navigation-panel.component';

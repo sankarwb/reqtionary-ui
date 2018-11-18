@@ -1,23 +1,28 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {
+  RouterModule,
+  Routes
+} from '@angular/router';
 
-import { AngularMaterialModule } from '../angularmaterial/angular-material.module';
-import { SharedModule } from '../shared/shared.module';
-import { ReqtionaryRoutingModule } from './reqtionary.routing';
+import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
+import {SharedModule} from '../shared/shared.module';
 import { ReqtionaryComponent } from './reqtionary.component';
 
+const routes: Routes = [
+  { path: '', component: ReqtionaryComponent,
+      children: [
+          { path: ':employeeId', loadChildren: '../home/home.module#HomeModule' }
+      ]
+  }
+];
+
 @NgModule({
-  declarations: [
-    ReqtionaryComponent
-  ],
   imports: [
-    RouterModule,
-    ReqtionaryRoutingModule,
+    RouterModule.forChild(routes),
     AngularMaterialModule,
     SharedModule
   ],
-  providers: [],
-  bootstrap: [
+  declarations: [
     ReqtionaryComponent
   ]
 })

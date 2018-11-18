@@ -4,6 +4,10 @@ import {Employee} from '../models/employee.model';
 @Injectable()
 export class GlobalSharedService {
 
+    currentApplicationId: number;
+    currentBacklogProjectId: number;
+    currentDefectsProjectId: number;
+    currentPermDocProjectId: number;
     private employee$: Employee;
     
     constructor() {

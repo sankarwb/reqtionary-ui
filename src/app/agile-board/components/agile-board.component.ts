@@ -3,7 +3,8 @@ import {
     OnInit,
     OnDestroy
 } from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+
 import {
     Observable,
     forkJoin
@@ -12,6 +13,7 @@ import {
 import {ArtifactsService} from "../../shared/services";
 import {Artifact} from "../../models/artifact.model";
 import {AgileStatus} from "../../models/agile-status.model";
+import { EventsService } from "src/app/services";
 
 @Component({
     selector: 'agile-board',
@@ -28,8 +30,10 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     private artifacts: Artifact[];
 
     constructor(
-        private activatedRoute: ActivatedRoute,
-        private artifactsService: ArtifactsService
+        private eventsService: EventsService,
+        private artifactsService: ArtifactsService,
+        public router: Router,
+        private activatedRoute: ActivatedRoute
     ) {
         const subscription = this.activatedRoute.params.subscribe(routeParams => {
             this.applicationId = routeParams.applicationId;
@@ -38,7 +42,7 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        
+        this.eventsService.selectedApplication('Gadget Value');
     }
 
     onRequirementTypesLoaded(requirementTypeId: number): void {

@@ -10,7 +10,7 @@ import {ArtifactsComponent} from './components';
 import {ArtifactsService} from '../shared/services';
 
 const routes: Routes = [
-    {path: ':applicationId', component: ArtifactsComponent}
+    {path: ':applicationId/:projectId', component: ArtifactsComponent}
 ];
 
 @NgModule({

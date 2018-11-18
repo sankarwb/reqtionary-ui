@@ -5,6 +5,7 @@ import {
 } from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
+import {AppRoute} from '../app-route.enum';
 import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
 import {SharedModule} from '../shared/shared.module';
 import {
@@ -17,10 +18,10 @@ import {HomeResolver} from './resolvers/home.resolver';
 
 const routes: Routes = [
     {path: '', component: HomeComponent, resolve: {applications: HomeResolver}},
-    {path: 'agile', loadChildren: '../agile-board/agile-board.module#AgileBoardModule'},
-    {path: 'defects', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
-    {path: 'backlog', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
-    {path: 'perm.doc', loadChildren: '../artifacts/artifacts.module#ArtifactsModule'}
+    {path: `${AppRoute.agile}`, loadChildren: '../agile-board/agile-board.module#AgileBoardModule'},
+    {path: `${AppRoute.defects}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: `${AppRoute.backlog}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: `${AppRoute.permdoc}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'}
 ];
 
 @NgModule({

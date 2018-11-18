@@ -14,6 +14,7 @@ import {
     Project,
     Release
 } from '../../models';
+import { AppRoute } from 'src/app/app-route.enum';
 
 @Component({
     selector: 'home-application',
@@ -27,10 +28,10 @@ import {
                 <a>members</a>
             </div>
             <div style="spacing-horizontal-flexbox">
-                <a (click)="routeToArtifacts('agile')">Agile Board</a>
-                <a (click)="routeToArtifacts('defects')" *ngIf="defectProject">Defects</a>
-                <a (click)="routeToArtifacts('backlog')" *ngIf="backlogProject">Backlog</a>
-                <a (click)="routeToArtifacts('perm.doc')" *ngIf="permdocProject">Permanent Documentation</a>
+                <a (click)="route(agile)">Agile Board</a>
+                <a (click)="route(defects)" *ngIf="defectsProjectId">Defects</a>
+                <a (click)="route(backlog)" *ngIf="backlogProjectId">Backlog</a>
+                <a (click)="route(permdoc)" *ngIf="permdocProjectId">Permanent Documentation</a>
             </div>
         </div>
         <span *ngFor="let release of filterHiddenReleases(releases);">
@@ -94,12 +95,16 @@ import {
 
 export class HomeApplicationComponent implements OnInit, OnDestroy {
 
-    private subscription: Subscription;
+    readonly agile = AppRoute.agile;
+    readonly defects = AppRoute.defects;
+    readonly backlog = AppRoute.backlog;
+    readonly permdoc = AppRoute.permdoc;
     @Input() application: Application;
-    private defectProject: number;
-    private backlogProject: number;
-    private permdocProject: number;
+    defectsProjectId: number;
+    backlogProjectId: number;
+    permdocProjectId: number;
     releases: Release[] = [];
+    private subscription: Subscription;
 
     constructor(
         private projectsService: ProjectsService,
@@ -115,8 +120,24 @@ export class HomeApplicationComponent implements OnInit, OnDestroy {
                                 });
     }
 
-    routeToArtifacts(route: string): void {
-        this.router.navigateByUrl(`/home/${this.globalService.employee.id}/${route}/${this.application.id}`);
+    route(uri: string): void {
+        this.globalService.currentApplicationId = this.application.id;
+        this.globalService.currentDefectsProjectId = this.defectsProjectId;
+        this.globalService.currentBacklogProjectId = this.backlogProjectId;
+        this.globalService.currentPermDocProjectId = this.permdocProjectId;
+        let url = `/home/${this.globalService.employee.id}/${uri}/${this.globalService.currentApplicationId}`;
+        switch (uri) {
+            case 'defects':
+                url += `/${this.globalService.currentDefectsProjectId}`;
+                break;
+            case 'backlog':
+                url += `/${this.globalService.currentBacklogProjectId}`;
+                break;
+            case 'perm.doc':
+                url += `/${this.globalService.currentPermDocProjectId}`;
+                break;
+        }
+        this.router.navigateByUrl(url);
     }
 
     filterHiddenProjects(projects: Project[]): Project[] {
@@ -134,13 +155,13 @@ export class HomeApplicationComponent implements OnInit, OnDestroy {
                     release.projects.forEach(project => {
                         switch (project.type) {
                             case -1:
-                                this.defectProject = project.id;
+                                this.defectsProjectId = project.id;
                                 break;
                             case -2:
-                                this.backlogProject = project.id;
+                                this.backlogProjectId = project.id;
                                 break;
                             case -3:
-                                this.permdocProject = project.id;
+                                this.permdocProjectId = project.id;
                                 break;
                         }
                     })
