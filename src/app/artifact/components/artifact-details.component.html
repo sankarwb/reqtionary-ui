@@ -1,0 +1,59 @@
+<form class="flex-box-row" *ngIf="artifact">
+    <div class="flex-box-column" style="margin-right: 6px; width: 50%;">
+        <div class="flex-box-column">
+            <label>NAME</label>
+            <input type="text" name="name" [(ngModel)]="artifact.name">
+        </div>
+        <div class="flex-box-column">
+            <label>DESCRIPTION</label>
+            <textarea rows="8" name="description" [(ngModel)]="artifact.description"></textarea>
+        </div>
+        <div class="flex-box-row">
+            <div class="flex-box-column">
+                <div class="flex-box-column custom-select">
+                    <label>ITERATION / SPRINT</label>
+                    <select name="projectId" [(ngModel)]="artifact.projectId">
+                        <option>Select Iteration / Sprint</option>
+                    </select>
+                </div>
+                <div class="flex-box-column custom-select">
+                    <label>AGILE STATUS</label>
+                    <select name="status" [(ngModel)]="artifact.status">
+                        <option>Select Agile Status</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex-box-column">
+                <div class="flex-box-column custom-select">
+                    <label>PARENT</label>
+                    <select name="parentId" [(ngModel)]="artifact.parentId">
+                        <option>Select Parent</option>
+                    </select>
+                </div>
+                <div class="flex-box-row">
+                    <div class="flex-box-column">
+                        <label>EFFECTIVE DATE</label>
+                        <input type="text" name="effectiveDate" [(ngModel)]="artifact.effectiveDate">
+                    </div>
+                    <div class="flex-box-column">
+                        <label>DISPLAY SEQUENCE</label>
+                        <input type="text" name="displaySequence" [(ngModel)]="artifact.displaySequence">
+                    </div>
+                </div>
+                <div class="flex-box-row">
+                    <div class="flex-box-column">
+                        <label>EXPECTED POINTS</label>
+                        <input type="text" name="expectedPoints" [(ngModel)]="artifact.expectedPoints">
+                    </div>
+                    <div class="flex-box-column">
+                        <label>ACTUAL POINTS</label>
+                        <input type="text" name="actualPoints" [(ngModel)]="artifact.actualPoints">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-box-column" style="width: 50%;">
+
+    </div>
+</form>

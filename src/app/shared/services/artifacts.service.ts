@@ -1,18 +1,24 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, Subscription } from "rxjs";
+import {Observable} from "rxjs";
 
 import { GlobalSharedService } from "../../services";
 import {
     requirementTypesByApplication,
+    attributesByApplication,
+    attributesByApplicationAndRequirementType,
     parentArtifactsByApplication,
     agileStatusesByApplication,
     artifacts,
-    agileArtifacts
+    agileArtifacts,
+    artifactById
 } from '../../endpoints';
-import { RequirementType } from "../../models/requirement-type.model";
-import { Artifact } from "../../models/artifact.model";
-import { AgileStatus } from "../../models/agile-status.model";
+import {
+    RequirementType,
+    Artifact,
+    Attribute,
+    AgileStatus
+} from "../../models";
 
 @Injectable()
 export class ArtifactsService {
@@ -21,18 +27,40 @@ export class ArtifactsService {
         private globalService: GlobalSharedService
     ) {}
 
-    subscriptions: Subscription[] = [];
-
     requirementtypes(applicationId: number): Observable<RequirementType[]> {
-        return this.http.get<RequirementType[]>(`${requirementTypesByApplication.replace(':applicationId', applicationId.toString())}`);
+        return this.http.get<RequirementType[]>(
+            `${requirementTypesByApplication
+                .replace(':applicationId', applicationId.toString())}`
+        );
+    }
+
+    attributes(applicationId: number, requirementTypeId?: number): Observable<Attribute[]> {
+        if (requirementTypeId) {
+            return this.http.get<Attribute[]>(
+                `${attributesByApplicationAndRequirementType
+                    .replace(':applicationId',applicationId.toString())
+                    .replace(':requirementTypeId', requirementTypeId.toString())}`
+            );
+        } else {
+            return this.http.get<Attribute[]>(
+                `${attributesByApplication
+                    .replace(':applicationId',applicationId.toString())}`
+            );
+        }
     }
 
     parentArtifacts(applicationId: number): Observable<Artifact[]> {
-        return this.http.get<Artifact[]>(`${parentArtifactsByApplication.replace(':applicationId', applicationId.toString())}`);
+        return this.http.get<Artifact[]>(
+            `${parentArtifactsByApplication
+                .replace(':applicationId', applicationId.toString())}`
+        );
     }
 
     agileStatuses(applicationId: number): Observable<AgileStatus[]> {
-        return this.http.get<AgileStatus[]>(`${agileStatusesByApplication.replace(':applicationId', applicationId.toString())}`);
+        return this.http.get<AgileStatus[]>(
+            `${agileStatusesByApplication
+                .replace(':applicationId', applicationId.toString())}`
+        );
     }
 
     artifacts(applicationId: number, projectId: number, requirementTypeId: number, parentArtifactId?: number, assignedTo?: number, agile?: boolean): Observable<Artifact[]> {
@@ -46,9 +74,10 @@ export class ArtifactsService {
         return this.http.get<Artifact[]>(uri);
     }
 
-    unsubscribe() {
-        while(this.subscriptions.length !== 0) {
-            this.subscriptions.pop().unsubscribe();
-        }
+    artifactById(artifactId: number): Observable<Artifact> {
+        return this.http.get<Artifact>(
+            `${artifactById
+                .replace(':artifactId', artifactId.toString())}`
+        );
     }
 }

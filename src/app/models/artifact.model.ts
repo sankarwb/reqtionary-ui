@@ -1,5 +1,6 @@
 import { BaseModel } from "./base.model";
 import { Employee } from "./employee.model";
+import { Attribute } from "./attribute.model";
 
 export class Artifact extends BaseModel {
     applicationId: number;
@@ -9,4 +10,5 @@ export class Artifact extends BaseModel {
     expectedPoints: number;
     status: string;
     user: Employee;
+    attributes: Attribute[];
 }

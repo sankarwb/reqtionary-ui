@@ -1,0 +1,19 @@
+<div class="flex-box-row">
+    <navigation-panel [type]="'artifactslist'"></navigation-panel>
+    <div class="flex-box-column-justify-center" style="width: 93%; height: 20%; margin: 1%;">
+        <!-- Agile Filters -->
+        <div style="display: flex; border-bottom: 1px solid var(--border-line-color);">
+            <artifact-reqtype style="width: 50%;" [applicationId]="applicationId"
+                (changeRequirementType)="onRequirementTypeChange($event)"></artifact-reqtype>
+            <artifact-filters style="width: 50%;" [applicationId]="applicationId"
+                (changeSprint)="onSprintChange($event)"></artifact-filters>
+        </div>
+        <!-- Agile Artifacts -->
+        <div style="display: flex; width: 100%;" *ngIf="artifacts && artifacts.length; else showNoRecordsMsg">
+            <data-grid [columns]="columns" [data]="artifacts" (linkClick)="onGridLinkClick($event)" (selectedItems)="getSelectedItems($event)"></data-grid>
+        </div>
+        <ng-template #showNoRecordsMsg>
+            <span class="no-records-message">No Records</span>
+        </ng-template>
+    </div>
+</div>

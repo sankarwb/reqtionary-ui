@@ -3,5 +3,6 @@ export enum AppRoute {
     agile = 'agile',
     defects = 'defects',
     backlog = 'backlog',
-    permdoc = 'perm.doc'
+    permdoc = 'perm.doc',
+    artifact = 'artifact'
 }

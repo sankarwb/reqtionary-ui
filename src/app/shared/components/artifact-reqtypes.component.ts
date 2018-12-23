@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Subscription } from "rxjs";
+
 import { RequirementType } from "../../models/requirement-type.model";
 import { ArtifactsService } from "../services";
 
@@ -9,6 +11,7 @@ import { ArtifactsService } from "../services";
         <span *ngFor="let reqtype of reqtypes;" (click)="onRequirementTypeSelected(reqtype)"
         style="font-size: 12px; font-weight: bold; border-radius: 20px; padding: 5px 10px; margin-bottom: 5px; cursor: pointer;" 
         [style.background]="reqtype.color">{{reqtype.name}}</span>
+        <a style="color: #FFF; font-size: 14px; border-radius: 20px; background-image: linear-gradient(to top, #3079EA, #5BCCF7);"><mat-icon>add</mat-icon> Add</a>
     </div>
     `,
     styles: [
@@ -26,20 +29,21 @@ import { ArtifactsService } from "../services";
 export class ArtifactReqtypesComponent {
 
     private reqtypes: RequirementType[];
+    private selectedRequirementTypeId: number;
+    private subscriptions: Subscription[] = [];
     @Input() applicationId: number;
+
     @Output() requirementTypesLoaded = new EventEmitter<number>();
     @Output() changeRequirementType = new EventEmitter<number>();
 
-    constructor(
-        private artifactsService: ArtifactsService
-    ) {}
+    constructor(private artifactsService: ArtifactsService) {}
 
     ngAfterViewInit() {
         const subscription = this.artifactsService.requirementtypes(this.applicationId).subscribe(reqtypes => {
             this.reqtypes = reqtypes;
             this.notifyRequirementTypesLoaded();
         });
-        this.artifactsService.subscriptions.push(subscription);
+        this.subscriptions.push(subscription);
     }
 
     private notifyRequirementTypesLoaded(): void {
@@ -47,6 +51,9 @@ export class ArtifactReqtypesComponent {
     }
 
     private onRequirementTypeSelected(requirementType: RequirementType): void {
-        this.changeRequirementType.emit(requirementType.id);
+        if (this.selectedRequirementTypeId !== requirementType.id) {
+            this.changeRequirementType.emit(requirementType.id);
+        }
+        this.selectedRequirementTypeId = requirementType.id;
     }
 }

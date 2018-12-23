@@ -19,6 +19,7 @@ import {
   EmployeeService,
   ProjectsService
 } from './services';
+import { DataGridPipe } from './pipes/data-grid.pipe';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {
     ArtifactFiltersComponent,
     ArtifactReqtypesComponent,
     UserThumbnailComponent,
-    NavigationPanelComponent
+    NavigationPanelComponent,
+    DataGridPipe
   ],
   declarations: [
     HeaderComponent,
@@ -49,12 +51,14 @@ import {
     ArtifactFiltersComponent,
     ArtifactReqtypesComponent,
     UserThumbnailComponent,
-    NavigationPanelComponent
+    NavigationPanelComponent,
+    DataGridPipe
   ],
   providers: [
     ArtifactsService,
     EmployeeService,
-    ProjectsService
+    ProjectsService,
+    DataGridPipe
   ]
 })
 export class SharedModule { }

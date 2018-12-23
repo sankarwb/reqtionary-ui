@@ -7,7 +7,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 import {
     Observable,
-    forkJoin
+    forkJoin,
+    Subscription
 } from "rxjs";
 
 import {ArtifactsService} from "../../shared/services";
@@ -27,7 +28,8 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     private parentArtifactId: number;
     private assignedTo: number;
     private agileStatuses: AgileStatus[];
-    private artifacts: Artifact[];
+    artifacts: Artifact[];
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private eventsService: EventsService,
@@ -38,7 +40,7 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
         const subscription = this.activatedRoute.params.subscribe(routeParams => {
             this.applicationId = routeParams.applicationId;
         });
-        this.artifactsService.subscriptions.push(subscription);
+        this.subscriptions.push(subscription);
     }
 
     ngOnInit() {
@@ -81,7 +83,8 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     }
 
     getArtifacts() {
-        this.artifactsService.artifacts(this.applicationId, this.projectId, this.requirementTypeId, this.parentArtifactId, this.assignedTo, true).subscribe(artifacts => this.artifacts = artifacts);
+        const subscription = this.artifactsService.artifacts(this.applicationId, this.projectId, this.requirementTypeId, this.parentArtifactId, this.assignedTo, true).subscribe(artifacts => this.artifacts = artifacts);
+        this.subscriptions.push(subscription);
     }
 
     artifactsByStatus(status: number): Observable<Artifact[]> {
@@ -93,6 +96,8 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-
+        while (this.subscriptions.length !== 0) {
+            this.subscriptions.pop().unsubscribe();
+        }
     }
 }

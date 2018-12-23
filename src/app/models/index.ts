@@ -5,3 +5,4 @@ export * from './employee.model';
 export * from './project.model';
 export * from './release.model';
 export * from './requirement-type.model';
+export * from './attribute.model';

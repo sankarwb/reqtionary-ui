@@ -21,7 +21,8 @@ const routes: Routes = [
     {path: `${AppRoute.agile}`, loadChildren: '../agile-board/agile-board.module#AgileBoardModule'},
     {path: `${AppRoute.defects}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
     {path: `${AppRoute.backlog}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
-    {path: `${AppRoute.permdoc}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'}
+    {path: `${AppRoute.permdoc}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: `${AppRoute.artifact}`, loadChildren: '../artifact/artifact.module#ArtifactModule'}
 ];
 
 @NgModule({

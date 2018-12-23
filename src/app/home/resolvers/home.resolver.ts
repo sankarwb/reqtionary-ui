@@ -5,7 +5,7 @@ import {
 } from '@angular/router';
 import {Observable} from 'rxjs';
 import {HomeService} from '../services/home.service';
-import {GlobalSharedService} from 'src/app/services';
+import {GlobalSharedService} from '../../services';
 
 @Injectable()
 export class HomeResolver implements Resolve<Observable<any>> {

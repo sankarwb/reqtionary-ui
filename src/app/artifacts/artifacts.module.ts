@@ -6,11 +6,14 @@ import {
 
 import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
 import {SharedModule} from '../shared/shared.module';
-import {ArtifactsComponent} from './components';
+import {ArtifactsListComponent} from './components';
 import {ArtifactsService} from '../shared/services';
 
 const routes: Routes = [
-    {path: ':applicationId/:projectId', component: ArtifactsComponent}
+    {
+        path: ':applicationId/:projectId',
+        component: ArtifactsListComponent
+    }
 ];
 
 @NgModule({
@@ -20,7 +23,7 @@ const routes: Routes = [
         SharedModule
     ],
     declarations: [
-        ArtifactsComponent
+        ArtifactsListComponent
     ],
     providers: [
         ArtifactsService
