@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {EventsService} from "../../services";
-import {Artifact} from 'src/app/models';
+import {Artifact, Application, Attribute} from '../../models';
+import { EmployeeService } from '../../shared/services';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'artifact',
@@ -22,22 +24,50 @@ import {Artifact} from 'src/app/models';
     ]
 })
 
-export class ArtifactComponent implements OnInit {
+export class ArtifactComponent implements OnInit, OnDestroy {
     
     activeSection: string;
+    attributes: Attribute[];
     artifact: Artifact;
+    application: Application;
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private eventsService: EventsService,
+        private employeeService: EmployeeService,
         private route: ActivatedRoute
-    ) {}
+    ) {
+        this.application = new Application();
+        const paramSubscription = this.route.params.subscribe(params => {
+            this.application.id = params.applicationId;
+        });
+        this.subscriptions.push(paramSubscription);
+        const queryparamSubscription = this.route.queryParams.subscribe(queryParams => {
+            this.application.name = queryParams.applicationName;
+        });
+        this.subscriptions.push(queryparamSubscription);
+    }
 
     ngOnInit() {
-        this.eventsService.selectedApplication('Gadget Value');
-        this.artifact = this.route.snapshot.data['artifact'] || new Artifact();
+        this.eventsService.selectedApplication(this.application.name);
+        this.attributes = this.route.snapshot.data['result']['attributes'];
+        this.artifact = this.route.snapshot.data['result']['artifact'];
+        if (!this.employeeService.employees) {
+            const subscription = this.employeeService.getEmployeesByApplication(this.application.id)
+                    .subscribe(employees => {
+                        this.employeeService.employees = employees;
+                    });
+            this.subscriptions.push(subscription);
+        }
     }
 
     onChangeSection(section: string): void {
         this.activeSection = section;
+    }
+
+    ngOnDestroy() {
+        while (this.subscriptions.length !== 0) {
+            this.subscriptions.pop().unsubscribe();
+        }
     }
 }

@@ -8,25 +8,25 @@ import {GlobalSharedService} from '../../services';
     <div class="flex-box-column" *ngIf="type==='artifactslist'"
         style="width: 85px; height: 100%; margin-right: 1%; border-top-right-radius: 20px; box-shadow: 5px 0px 20px rgb(0, 0, 0, 0.12); color: var(--theme-color);">
         <div style="height: 110px;"></div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': router.url.includes('agile')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': router.url.includes('agile')}"
             (click)="navigate('agile')"
             style="margin-top: 2%; margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="router.url.includes('agile')?'#FFFFFF':'var(--theme-color)'">view_week</mat-icon>
             <span style="font-size: 12px;" [style.color]="router.url.includes('agile')?'#FFFFFF':'var(--theme-color)'">Agile Board</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': router.url.includes('defects')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': router.url.includes('defects')}"
             (click)="navigate('defects')"
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="router.url.includes('defects')?'#FFFFFF':'var(--theme-color)'">bug_report</mat-icon>
             <span style="font-size: 12px;" [style.color]="router.url.includes('defects')?'#FFFFFF':'var(--theme-color)'">Defects</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': router.url.includes('backlog')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': router.url.includes('backlog')}"
             (click)="navigate('backlog')"    
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="router.url.includes('backlog')?'#FFFFFF':'var(--theme-color)'">view_list</mat-icon>
             <span style="font-size: 12px;" [style.color]="router.url.includes('backlog')?'#FFFFFF':'var(--theme-color)'">Backlog</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': router.url.includes('perm.doc')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': router.url.includes('perm.doc')}"
             (click)="navigate('perm.doc')"
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="router.url.includes('perm.doc')?'#FFFFFF':'var(--theme-color)'">dns</mat-icon>
@@ -37,31 +37,31 @@ import {GlobalSharedService} from '../../services';
     <div class="flex-box-column" *ngIf="type==='artifact'"
         style="width: 85px; height: 100%; margin-right: 1%; border-top-right-radius: 20px; box-shadow: 5px 0px 20px rgb(0, 0, 0, 0.12); color: var(--theme-color);">
         <div style="height: 60px;"></div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': activeSection.includes('details')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': activeSection.includes('details')}"
             (click)="setActiveSection('details')"
             style="margin-top: 2%; margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="activeSection.includes('details')?'#FFFFFF':'#4DB2F3'">view_week</mat-icon>
             <span style="font-size: 12px;" [style.color]="activeSection.includes('details')?'#FFFFFF':'#4DB2F3'">Details</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': activeSection.includes('comments')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': activeSection.includes('comments')}"
             (click)="setActiveSection('comments')"
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="activeSection.includes('comments')?'#FFFFFF':'#4DB2F3'">comment</mat-icon>
             <span style="font-size: 12px;" [style.color]="activeSection.includes('comments')?'#FFFFFF':'#4DB2F3'">Comments</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': activeSection.includes('associations')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': activeSection.includes('associations')}"
             (click)="setActiveSection('associations')"    
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="activeSection.includes('associations')?'#FFFFFF':'#4DB2F3'">link</mat-icon>
             <span style="font-size: 12px;" [style.color]="activeSection.includes('associations')?'#FFFFFF':'#4DB2F3'">Associations</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': activeSection.includes('attachments')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': activeSection.includes('attachments')}"
             (click)="setActiveSection('attachments')"
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="activeSection.includes('attachments')?'#FFFFFF':'#4DB2F3'">attachment</mat-icon>
             <span style="font-size: 12px;" [style.color]="activeSection.includes('attachments')?'#FFFFFF':'#4DB2F3'">Attachments</span>
         </div>
-        <div class="flex-box-column-center" [ngClass]="{'navigation-icons-gradient-background': activeSection.includes('history')}"
+        <div class="flex-box-column-center" [ngClass]="{'gradient-background': activeSection.includes('history')}"
             (click)="setActiveSection('history')"
             style="margin-bottom: 20px; height: 80px; border-radius: 4px; cursor: pointer;">
             <mat-icon [style.color]="activeSection.includes('history')?'#FFFFFF':'#4DB2F3'">history</mat-icon>

@@ -3,11 +3,11 @@
     <div class="flex-box-column-justify-center" style="width: 93%; height: 20%; margin: 1%;">
         <!-- Agile Filters -->
         <div style="display: flex; border-bottom: 1px solid var(--border-line-color);">
-            <artifact-reqtype style="width: 60%;" [applicationId]="applicationId" 
+            <artifact-reqtype style="width: 60%;" [applicationId]="application.id" 
                 (requirementTypesLoaded)="onRequirementTypesLoaded($event)"
                 (changeRequirementType)="onRequirementTypeChange($event)">
             </artifact-reqtype>
-            <artifact-filters style="width: 40%;" [agileLayout]="true" [applicationId]="applicationId"
+            <artifact-filters style="width: 40%;" [agileLayout]="true" [applicationId]="application.id"
                 (changeAssignedto)="onAssignedtoChange($event)" (changeEpic)="onEpicChange($event)"
                 (changeSprint)="onSprintChange($event)" (changeLayout)="onlayoutChange($event)">
             </artifact-filters>

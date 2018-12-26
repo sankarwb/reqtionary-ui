@@ -53,7 +53,7 @@ import { Subscription } from "rxjs";
                         </mat-menu>
                     </ng-container>
                 </mat-menu>
-                <button mat-button [matMenuTriggerFor]="releasesMenu">{{selectedStrint.name}}</button>
+                <button mat-button [matMenuTriggerFor]="releasesMenu">{{selectedSprint.name}}</button>
             </div>
             <div style="text-align: center;">
                 <mat-button-toggle-group #group="matButtonToggleGroup" value='card'>
@@ -81,7 +81,7 @@ import { Subscription } from "rxjs";
                         </mat-menu>
                     </ng-container>
                 </mat-menu>
-                <button mat-button [matMenuTriggerFor]="releasesMenu">{{selectedStrint.name}}</button>
+                <button mat-button [matMenuTriggerFor]="releasesMenu">{{selectedSprint.name}}</button>
             </div>
         </div>
     </div>
@@ -105,11 +105,12 @@ export class ArtifactFiltersComponent implements OnInit, OnDestroy {
     
     @ViewChild('group') btnsToggleGroup: MatButtonToggleGroup;
     @Input() agileLayout: boolean;
-    @Input() 
-    private applicationId: number;
-    private selectedStrint: Project;
+    @Input() applicationId: number;
+    private selectedSprint: Project;
     private releases: Release[];
-    private employees: Employee[];
+    private get employees(): Employee[] {
+        return this.employeeService.employees;
+    }
     private parentArtifacts: Artifact[];
     private subscriptions: Subscription[] = [];
 
@@ -123,20 +124,14 @@ export class ArtifactFiltersComponent implements OnInit, OnDestroy {
         private projectsService: ProjectsService,
         private artifactsService: ArtifactsService
     ) {
-        this.selectedStrint = new Project();
-        this.selectedStrint.name = 'Select Strint';
+        this.selectedSprint = new Project();
+        this.selectedSprint.name = 'Select Sprint';
     }
 
     ngOnInit() {
         if (this.agileLayout) {
             //this.btnsToggleGroup.value = 'card';
             
-            const emploeesSubscription = this.employeeService.getEmployeesByApplication(this.applicationId)
-                .subscribe(employees => {
-                    this.employees = employees;
-                });
-            this.subscriptions.push(emploeesSubscription);
-
             const epicsSubscription = this.artifactsService.parentArtifacts(this.applicationId)
                 .subscribe(parentArtifacts => {
                     this.parentArtifacts = parentArtifacts;
@@ -166,7 +161,7 @@ export class ArtifactFiltersComponent implements OnInit, OnDestroy {
     }
 
     onSprintChange(sprint: Project): void {
-        this.selectedStrint = sprint;
+        this.selectedSprint = sprint;
         this.changeSprint.emit(sprint.id);
     }
     

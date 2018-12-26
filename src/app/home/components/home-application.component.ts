@@ -24,7 +24,7 @@ import { AppRoute } from 'src/app/app-route.enum';
             <div class="spacing-horizontal-flexbox" style="flex: 1;">
                 <div class="letter-box"><span>{{application.name.substr(0,1).toUpperCase()}}</span></div>
                 <span style="font-size: 26px; color: var(--heading-text-color);">{{application.name}}</span>
-                <span style="color: #CDD0D4; font-size: 20px;">&#46;</span>
+                <span style="color: #CDD0D4;"> &bull; </span>
                 <a>members</a>
             </div>
             <div style="spacing-horizontal-flexbox">
@@ -137,7 +137,7 @@ export class HomeApplicationComponent implements OnInit, OnDestroy {
                 url += `/${this.globalService.currentPermDocProjectId}`;
                 break;
         }
-        this.router.navigateByUrl(url);
+        this.router.navigate([url], {queryParams: {applicationName: this.application.name}});
     }
 
     filterHiddenProjects(projects: Project[]): Project[] {

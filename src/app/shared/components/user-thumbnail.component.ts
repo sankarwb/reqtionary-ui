@@ -5,8 +5,8 @@ import {Employee} from '../../models/employee.model';
     selector: 'user-thumbnail',
     template: `
     <div style="display: flex; align-items: center;">
-        <label style="padding-right: 10px;">{{employee?.firstName}} {{employee?.lastName}}</label>
-        <img [src]="src" [ngClass]="{'user-thumbnail': !small, 'user-thumbnail-small': small}">
+        <label style="padding-right: 10px;" *ngIf="employee">{{employee?.firstName}} {{employee?.lastName}}</label>
+        <img [src]="src" [ngClass]="{'user-thumbnail': (!small || !medium), 'user-thumbnail-small': small, 'user-thumbnail-medium': medium}">
     </div>
     `
 })
@@ -14,6 +14,7 @@ export class UserThumbnailComponent {
     
     @Input() src: string;
     @Input() small: boolean;
+    @Input() medium: boolean;
     @Input() employee: Employee;
     constructor() {}
 }

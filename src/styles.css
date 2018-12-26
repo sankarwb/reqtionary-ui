@@ -50,7 +50,15 @@ a {
     border: 1px solid var(--theme-color);
 }
 
-.navigation-icons-gradient-background {
+.user-thumbnail-medium {
+    max-width: 24px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--theme-color);
+}
+
+.gradient-background {
     background-image: linear-gradient(to top, #3079EA, #5BCCF7);
 }
 

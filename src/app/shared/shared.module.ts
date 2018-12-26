@@ -12,7 +12,9 @@ import {
   ArtifactFiltersComponent,
   ArtifactReqtypesComponent,
   UserThumbnailComponent,
-  NavigationPanelComponent
+  NavigationPanelComponent,
+  ConversationsComponent,
+  ConversationComponent
 } from './components';
 import {
   ArtifactsService,
@@ -40,7 +42,9 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
     ArtifactReqtypesComponent,
     UserThumbnailComponent,
     NavigationPanelComponent,
-    DataGridPipe
+    DataGridPipe,
+    ConversationsComponent,
+    ConversationComponent
   ],
   declarations: [
     HeaderComponent,
@@ -52,7 +56,9 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
     ArtifactReqtypesComponent,
     UserThumbnailComponent,
     NavigationPanelComponent,
-    DataGridPipe
+    DataGridPipe,
+    ConversationsComponent,
+    ConversationComponent
   ],
   providers: [
     ArtifactsService,

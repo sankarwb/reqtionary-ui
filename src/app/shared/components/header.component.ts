@@ -25,7 +25,7 @@ import {GlobalSharedService, EventsService} from '../../services';
                     <span style="font-size: 22px; font-weight: bold;">{{application.substr(0,1)}}</span>
                 </div>
                 <span style="font-size: 18px; font-weight: bold; color: #70757B;">{{application}}</span>
-                <span style="font-size: 6px; color: #E5E8E8; margin: 0 2%;">&#46;</span>
+                <span style="color: #E5E8E8; margin: 0 2%;"> &bull; </span>
                 <a style="font-size: 14px; color: #70757B;">Members</a>
             </div>
             <div class="flex-box-row" style="flex: 1;">

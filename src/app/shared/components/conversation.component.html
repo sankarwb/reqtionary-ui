@@ -1,0 +1,11 @@
+<div class="flex-box-row" style="padding: 1%; border: 1px solid #E5E8E8; border-radius: 4px;">
+    <user-thumbnail style="margin-top: 4px;" [src]="'./../../../assets/user_thumbnail.jpg'" [medium]="true"></user-thumbnail>
+    <div class="flex-box-column">
+        <span style="color: #70757B;">
+            <span style="font-size: 14px; font-weight: bold;">{{by}}</span>
+            <span style="color: #E5E8E8; padding: 1%;"> &bull; </span>
+            <span style="font-size: 12px;">{{conversation?.time}}</span>
+        </span>
+        <article style="color: #262626; font-size: 12px; margin-top: 1%;">{{conversation?.comment}}</article>
+    </div>
+</div>

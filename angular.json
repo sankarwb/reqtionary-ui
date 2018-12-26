@@ -25,7 +25,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/libs/jquery.min.js",
+              "src/libs/paperfold.js"
+            ]
           },
           "configurations": {
             "production": {

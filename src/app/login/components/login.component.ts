@@ -26,7 +26,7 @@ import { LoginRequest } from '../models/login-request.model';
                     <a style="color: var(--theme-color);">Remember Me?</a>
                     <input type="checkbox" name="rememberMe" checked>
                 </div>
-                <div class="login-btn" (click)="login(loginForm)">
+                <div class="login-btn gradient-background" (click)="login(loginForm)">
                     <label>LOGIN</label>
                 </div>
                 <div class="create-new-btn">
@@ -61,7 +61,6 @@ import { LoginRequest } from '../models/login-request.model';
             height: 10%;
             border-radius: 5px;
             cursor: pointer;
-            background-image: linear-gradient(to bottom, var(--theme-color), white);
         }`, `
         .login-btn:hover {
             background-image: linear-gradient(to bottom right, var(--theme-color), white);

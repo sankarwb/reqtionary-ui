@@ -1,0 +1,28 @@
+<form class="flex-box-row" *ngIf="attributes">
+    <div class="flex-box-row" style="flex-wrap: wrap;">
+        <div class="flex-box-column" *ngFor="let attribute of attributes;" [ngSwitch]="attribute.type">
+            <label>{{attribute.name}}</label>
+            <span *ngSwitchCase="'Text Input'">
+                <input type="text" [name]="attribute.id" [(ngModel)]="artifact[attribute.id]">
+            </span>
+            <span *ngSwitchCase="'Combo Box'">
+                <select [name]="attribute.id" [(ngModel)]="artifact[attribute.id]">
+                    <option></option>
+                    <option *ngFor="let value of attribute.values">{{value}}</option>
+                </select>
+            </span>
+            <span *ngSwitchCase="'Date'">
+                <input type="text" [name]="attribute.id" [(ngModel)]="artifact[attribute.id]">
+            </span>
+            <span *ngSwitchCase="'Numeric Input'">
+                <input type="text" [name]="attribute.id" [(ngModel)]="artifact[attribute.id]">
+            </span>
+            <span *ngSwitchCase="'Check Box'">
+                <input type="text" [name]="attribute.id" [(ngModel)]="artifact[attribute.id]">
+            </span>
+            <span *ngSwitchCase="'Radio Button'">
+                <input type="text" [name]="attribute.id" [(ngModel)]="artifact[attribute.id]">
+            </span>
+        </div>
+    </div>
+</form>

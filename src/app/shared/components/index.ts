@@ -7,3 +7,5 @@ export * from './artifact-reqtypes.component';
 export * from './artifact-filters.component';
 export * from './user-thumbnail.component';
 export * from './navigation-panel.component';
+export * from './conversations.component';
+export * from './conversation.component';

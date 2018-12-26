@@ -3,9 +3,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 
 import {AppRoute} from '../../app-route.enum';
-import {ArtifactsService} from "../../shared/services";
+import {ArtifactsService, EmployeeService} from "../../shared/services";
 import {EventsService, GlobalSharedService} from "../../services";
-import {Artifact} from "../../models/artifact.model";
+import {Artifact, Application} from "../../models";
 import {DataGridColumn} from "../../shared/models/data-grid-column.model";
 
 @Component({
@@ -20,7 +20,7 @@ export class ArtifactsListComponent implements OnInit, OnDestroy {
         new DataGridColumn('status','Status','text', 80)
     ];
     columns = [];
-    private applicationId: number;
+    private application: Application;
     private projectId: number;
     private requirementTypeId: number;
     artifacts: Artifact[];
@@ -31,23 +31,36 @@ export class ArtifactsListComponent implements OnInit, OnDestroy {
         private globalService: GlobalSharedService,
         private eventsService: EventsService,
         private artifactsService: ArtifactsService,
-        private activatedRoute: ActivatedRoute,
+        private employeeService: EmployeeService,
+        private route: ActivatedRoute,
         private router: Router
     ) {
-        const subscription = this.activatedRoute.params.subscribe(routeParams => {
-            this.applicationId = routeParams.applicationId;
-            this.projectId = routeParams.projectId;
+        this.application = new Application();
+        const paramSubscription = this.route.params.subscribe(params => {
+            this.application.id = params.applicationId;
+            this.projectId = params.projectId;
         });
-        this.subscriptions.push(subscription);
+        this.subscriptions.push(paramSubscription);
+        const queryparamSubscription = this.route.queryParams.subscribe(queryParams => {
+            this.application.name = queryParams.applicationName;
+        });
+        this.subscriptions.push(queryparamSubscription);
     }
 
     ngOnInit() {
-        this.eventsService.selectedApplication('Gadget Value');
+        this.eventsService.selectedApplication(this.application.name);
+        if (!this.employeeService.employees) {
+            const subscription = this.employeeService.getEmployeesByApplication(this.application.id)
+                    .subscribe(employees => {
+                        this.employeeService.employees = employees;
+                    });
+            this.subscriptions.push(subscription);
+        }
     }
 
     onRequirementTypeChange(requirementTypeId: number): void {
         this.requirementTypeId = requirementTypeId;
-        const subscription = this.artifactsService.attributes(this.applicationId, this.requirementTypeId).subscribe(attributes => {
+        const subscription = this.artifactsService.attributes(this.application.id, this.requirementTypeId).subscribe(attributes => {
             this.columns = [...this.defaultColumns, ...attributes.map(attribute => new DataGridColumn(attribute.id.toString(), attribute.name, attribute.type, 100))];
             this.getArtifacts();
         });
@@ -63,7 +76,7 @@ export class ArtifactsListComponent implements OnInit, OnDestroy {
     }
 
     getArtifacts(): void {
-        const artifactSubscription = this.artifactsService.artifacts(this.applicationId, this.projectId, this.requirementTypeId).subscribe(artifacts => this.artifacts = artifacts);
+        const artifactSubscription = this.artifactsService.artifacts(this.application.id, this.projectId, this.requirementTypeId).subscribe(artifacts => this.artifacts = artifacts);
         this.subscriptions.push(artifactSubscription);
     }
 
@@ -74,7 +87,7 @@ export class ArtifactsListComponent implements OnInit, OnDestroy {
     }
 
     onGridLinkClick(data: any): void {
-        this.router.navigate([AppRoute.home, this.globalService.employee.id, AppRoute.artifact, this.applicationId, 'edit', data]);
+        this.router.navigate([AppRoute.home, this.globalService.employee.id, AppRoute.artifact, this.application.id, this.requirementTypeId, 'edit', data], {queryParams: {applicationName: this.application.name}});
     }
 
     ngOnDestroy() {

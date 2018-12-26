@@ -9,6 +9,7 @@ import {SharedModule} from '../shared/shared.module';
 import {
     ArtifactComponent,
     ArtifactDetailsComponent,
+    ArtifactAttributesComponent,
     ArtifactCommentsComponent,
     ArtifactAssociationsComponent,
     ArtifactAttachmentsComponent,
@@ -19,13 +20,13 @@ import {ArtifactsService} from '../shared/services';
 
 const routes: Routes = [
     {
-        path: ':applicationId/create',
+        path: ':applicationId/:requirementTypeId/create',
         component: ArtifactComponent
     },{
-        path: ':applicationId/edit/:artifactId',
+        path: ':applicationId/:requirementTypeId/edit/:artifactId',
         component: ArtifactComponent,
         resolve: {
-            artifact: ArtifactResolve
+            result: ArtifactResolve
         }
     }
 ];
@@ -39,6 +40,7 @@ const routes: Routes = [
     declarations: [
         ArtifactComponent,
         ArtifactDetailsComponent,
+        ArtifactAttributesComponent,
         ArtifactCommentsComponent,
         ArtifactAssociationsComponent,
         ArtifactAttachmentsComponent,

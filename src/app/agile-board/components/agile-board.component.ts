@@ -1,20 +1,10 @@
-import {
-    Component,
-    OnInit,
-    OnDestroy
-} from "@angular/core";
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Observable, forkJoin, Subscription} from "rxjs";
 
-import {
-    Observable,
-    forkJoin,
-    Subscription
-} from "rxjs";
-
-import {ArtifactsService} from "../../shared/services";
-import {Artifact} from "../../models/artifact.model";
-import {AgileStatus} from "../../models/agile-status.model";
-import { EventsService } from "src/app/services";
+import {ArtifactsService, EmployeeService} from "../../shared/services";
+import {Artifact, AgileStatus, Application} from "../../models";
+import { EventsService } from "../../services";
 
 @Component({
     selector: 'agile-board',
@@ -22,7 +12,7 @@ import { EventsService } from "src/app/services";
 })
 export class AgileBoardComponent implements OnInit, OnDestroy {
 
-    private applicationId: number;
+    private application: Application;
     private projectId: number;
     private requirementTypeId: number;
     private parentArtifactId: number;
@@ -34,24 +24,37 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     constructor(
         private eventsService: EventsService,
         private artifactsService: ArtifactsService,
+        private employeeService: EmployeeService,
         public router: Router,
-        private activatedRoute: ActivatedRoute
+        private route: ActivatedRoute
     ) {
-        const subscription = this.activatedRoute.params.subscribe(routeParams => {
-            this.applicationId = routeParams.applicationId;
+        this.application = new Application();
+        const paramSubscription = this.route.params.subscribe(params => {
+            this.application.id = params.applicationId;
         });
-        this.subscriptions.push(subscription);
+        this.subscriptions.push(paramSubscription);
+        const queryparamSubscription = this.route.queryParams.subscribe(queryParams => {
+            this.application.name = queryParams.applicationName;
+        });
+        this.subscriptions.push(queryparamSubscription);
     }
 
     ngOnInit() {
-        this.eventsService.selectedApplication('Gadget Value');
+        this.eventsService.selectedApplication(this.application.name);
+        if (!this.employeeService.employees) {
+            const subscription = this.employeeService.getEmployeesByApplication(this.application.id)
+                    .subscribe(employees => {
+                        this.employeeService.employees = employees;
+                    });
+            this.subscriptions.push(subscription);
+        }
     }
 
     onRequirementTypesLoaded(requirementTypeId: number): void {
         this.requirementTypeId = requirementTypeId;
         forkJoin(
-            this.artifactsService.agileStatuses(this.applicationId),
-            this.artifactsService.artifacts(this.applicationId, this.projectId, 37)
+            this.artifactsService.agileStatuses(this.application.id),
+            this.artifactsService.artifacts(this.application.id, this.projectId, 37)
         ).subscribe(results => {
             this.agileStatuses = results[0];
             this.artifacts = results[1];
@@ -83,7 +86,7 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
     }
 
     getArtifacts() {
-        const subscription = this.artifactsService.artifacts(this.applicationId, this.projectId, this.requirementTypeId, this.parentArtifactId, this.assignedTo, true).subscribe(artifacts => this.artifacts = artifacts);
+        const subscription = this.artifactsService.artifacts(this.application.id, this.projectId, this.requirementTypeId, this.parentArtifactId, this.assignedTo, true).subscribe(artifacts => this.artifacts = artifacts);
         this.subscriptions.push(subscription);
     }
 
