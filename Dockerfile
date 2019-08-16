@@ -1,17 +1,3 @@
-From node:12.7.0
-
-WORKDIR /src
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-EXPOSE 4200
-
-CMD ["npm", "start"]
-
 # base image
 FROM node:12.7.0
 
@@ -33,6 +19,8 @@ RUN npm install -g @angular/cli@7.3.9
 
 # add app
 COPY . /app
+
+EXPOSE 4200
 
 # start app
 CMD ng serve --host 0.0.0.0
