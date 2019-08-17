@@ -1,0 +1,32 @@
+<div class="flex-box-column">
+    <div class="flex-box-column" style="width: 50%; color: #70757B; font-size: 12px;">
+        <div class="flex-box-row-center" style="margin: 1%;" *ngFor="let attachment of attachments;">
+            <span class="flex-box-row" style="flex: 1;">
+                <span>{{attachment.date}}</span>
+            </span>
+            <span class="flex-box-row" style="flex: 2;">
+                <span>{{attachment.size}} - <a>{{attachment.name}}</a></span>
+            </span>
+            <span class="flex-box-row">
+                <mat-icon style="font-size: 20px;">delete_outline</mat-icon>
+                <mat-icon style="font-size: 20px;">save_alt</mat-icon>
+            </span>
+        </div>
+        <span *ngIf="fileUploader && fileUploader.uploader">
+            <div class="flex-box-row-center" style="margin: 1%;" *ngFor="let attachment of fileUploader.uploader.queue;">
+                <span class="flex-box-row" style="flex: 1;">
+                    <span>Spet, 25</span>
+                </span>
+                <span class="flex-box-row" style="flex: 2;">
+                    <span>{{attachment?.file?.size/1024/1024 | number:'.2' }}MB - <a>{{attachment?.file?.name}}</a></span>
+                </span>
+                <span *ngIf="!attachment.isSuccess">{{attachment?.progress + '%'}}</span>
+                <span class="flex-box-row" *ngIf="attachment.isSuccess">
+                    <mat-icon style="font-size: 20px;">delete_outline</mat-icon>
+                    <mat-icon style="font-size: 20px;">save_alt</mat-icon>
+                </span>
+            </div>
+        </span>
+    </div>
+    <file-uploader style="width: 50%;"></file-uploader>
+</div>

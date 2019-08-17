@@ -7,7 +7,7 @@ import { FormGroup } from "@angular/forms";
 })
 export class DataGridComponent implements OnInit {
 
-    @ViewChild('filterForm') filterForm: FormGroup;
+    @ViewChild('filterForm', {static: true}) filterForm: FormGroup;
     @Input() columns: {[key: string]: any}[];
     @Input() data: {[key: string]: any}[];
     customFilter: any = {};

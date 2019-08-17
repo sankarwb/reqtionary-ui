@@ -1,0 +1,78 @@
+<style type="text/css">
+	th {text-align: center;}
+	label {
+		color: rgba(0,0,0,.38);
+	    font-size: 100%;
+	}
+	table {margin: 0px !important;}
+	mat-select {width: 100%;}
+	a {
+		position: relative;
+	    right: 18px;
+	    top: 4px;
+	}
+</style>
+<div>
+	<label>{{title}}</label>
+	<a class="glyphicon glyphicon-plus pull-right" (click)="addNew()"></a>
+</div>
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr >
+			<th *ngFor="let column of columns;" [ngStyle]="{'width':column.width+'%'}" [ngSwitch]="column.key">
+				<span>{{column.value}}</span>
+			</th>
+			<!-- <th style="width: 40%;">Role Name</th>
+			<th style="width: 40%;">Employee Name</th> -->
+			<th style="width: 1%;">Action</th>	
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let row of rows;">
+			<td *ngFor="let column of columns;" [ngSwitch]="column.key">
+				<!-- <mat-form-field>
+				  <input matInput [mdAutocomplete]="autoRole" [ngModel]="row.roleName" (ngModelChange)="onModelChange($event,'roleName',row)" 
+				  [formControl]="roleCtrl">
+				</mat-form-field>
+
+				<mat-autocomplete #autoRole="mdAutocomplete">
+				  <mat-option *ngFor="let role of filteredRoles;" [value]="role.name">
+				    {{ role.name }}
+				  </mat-option>
+				</mat-autocomplete> -->
+				
+				<mat-select name="role" *ngSwitchCase="'roleName'" [ngModel]="row.roleId" (ngModelChange)="onRoleEmpChange($event,'roleId',row)">
+					<!-- <mat-option selected>Add Role</mat-option> -->
+					<mat-option *ngFor="let role of globalService.roles" [value]="role.id">{{role.name}}</mat-option>
+				</mat-select>
+				<mat-select name="employee" *ngSwitchCase="'empName'" [ngModel]="row.empId" (ngModelChange)="onRoleEmpChange($event,'empId',row)">
+					<!-- <mat-option selected>Add Employee</mat-option> -->
+					<mat-option *ngFor="let emp of globalService.employees" [value]="emp.id">{{emp.fName + ' ' + emp.lName}}</mat-option>
+				</mat-select>
+				<mat-form-field *ngSwitchCase="'agileStatus'" style="height: 10px;">
+				  <input matInput name="agileStatus" type="text" [ngModel]="row.name" (ngModelChange)="onAgileStatusChange($event,'name',row)">
+				</mat-form-field>
+				<mat-form-field *ngSwitchCase="'statusOrder'" style="height: 10px;">
+				  <input matInput name="statusOrder" type="number" [ngModel]="row.order" min="1" [max]="rows.length" 
+				  (ngModelChange)="onAgileStatusChange($event,'order',row)">
+				</mat-form-field>
+			</td>
+			<!-- <td *ngSwitchCase="'empName'">
+				<mat-form-field>
+				  <input matInput [mdAutocomplete]="autoEmp" [ngModel]="row.empName" (ngModelChange)="onModelChange($event,'empName',row)"
+				  [formControl]="empCtrl">
+				</mat-form-field>
+
+				<mat-autocomplete #autoEmp="mdAutocomplete">
+				  <mat-option *ngFor="let emp of filteredEmps;" [value]="emp.fName + ' ' + emp.lName">
+				    {{ emp.fName + ' ' + emp.lName }}
+				  </mat-option>
+				</mat-autocomplete>				
+			</td> -->
+			<!-- <td contenteditable="true" *ngFor="let column of columns;let index=index;" 
+			(input)="onModelChange($event,row,column.key)">{{row[column.key]}}</td> -->
+			<!-- <td><span class="glyphicon glyphicon-edit"></span></td> -->
+			<td style="text-align: center;"><span [ngClass]="{'glyphicon glyphicon-trash':(row.active===1),'glyphicon glyphicon-refresh':(row.active===0)}" (click)="onDelete(row.active,row)"></span></td>
+		</tr>
+	</tbody>
+</table>

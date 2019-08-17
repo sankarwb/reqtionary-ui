@@ -1,0 +1,66 @@
+<style type="text/css">
+	label, th {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+</style>
+<div class="col-md-10 col-sm-10 col-xs-10" style="padding-right: 0px;">
+	<mat-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabChange($event)">
+		<mat-tab label="List">
+			<searchable-table [rows]="projects" [columns]="columns" (itemSelected)="onItemSelected($event)"></searchable-table>
+		</mat-tab>
+		<mat-tab label="{{label}}">
+			<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;" *ngIf="selectedRow">
+				<form role="form" id="frmDetails" #form="ngForm" class="col-md-5 col-sm-5 col-xs-12 form-horizontal">
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12" [ngStyle]="{'borderLeft':(projectName.touched && projectName.invalid)?'solid 2px red':'none'}">
+					  <input matInput name="name" placeholder="Name" [(ngModel)]="selectedRow.name" #projectName="ngModel" required>
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <textarea matInput name="description" placeholder="Description" [(ngModel)]="selectedRow.desc"></textarea>
+					</mat-form-field>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Application" name="application" #appName="ngModel"
+						[(ngModel)]="selectedRow.appId" style="margin-top: 20px;" [ngStyle]="{'borderLeft':(appName.touched && selectedRow.appId === 0)?'solid 2px red':'none'}" required>
+					   <mat-option *ngFor="let app of globalService.applications" [value]="app.id">{{app.name}}</mat-option>
+					</mat-select>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="fCode" placeholder="Funding Code" [(ngModel)]="selectedRow.code">
+					</mat-form-field>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Release" name="release" #releaseName="ngModel"
+						[(ngModel)]="selectedRow.releaseId" style="margin-top: 20px;" [ngStyle]="{'borderLeft':(releaseName.touched && selectedRow.releaseId === 0)?'solid 2px red':'none'}" required>
+					   <mat-option *ngFor="let release of globalService.releases" [value]="release.id">{{release.name}}</mat-option>
+					</mat-select>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Status" name="status" #statusName="ngModel"
+						[(ngModel)]="selectedRow.statusId" style="margin-top: 25px;" [ngStyle]="{'borderLeft':(statusName.touched && selectedRow.statusId === 0)?'solid 2px red':'none'}" required>
+					   <mat-option *ngFor="let status of globalService.status" [value]="status.id">{{status.type}}</mat-option>
+					</mat-select>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Phase" name="phase" #phaseName="ngModel"
+						[(ngModel)]="selectedRow.phaseId" style="margin-top: 25px;" [ngStyle]="{'borderLeft':(phaseName.touched && selectedRow.phaseId === 0)?'solid 2px red':'none'}" required>
+					   <mat-option *ngFor="let phase of globalService.phases" [value]="phase.id">{{phase.name}}</mat-option>
+					</mat-select>
+				</form>
+				<div class="col-md-6 col-sm-6 col-xs-6" style="margin-left: 30px !important;">
+					<mat-form-field>
+					  <input matInput name="startDate" type="date" placeholder="Start Date" 
+					  [ngModel]="selectedRow.startDate|date:'yyyy-MM-dd'" (ngModelChange)="selectedRow.startDate=$event">
+					</mat-form-field>
+					<mat-form-field>
+					  <input matInput name="endDate" type="date" placeholder="End Date" 
+					  [ngModel]="selectedRow.endDate|date:'yyyy-MM-dd'" (ngModelChange)="selectedRow.endDate=$event">
+					</mat-form-field>
+					<mat-form-field>
+					  <input matInput name="prodDate" type="date" placeholder="Production Date" [ngModel]="selectedRow.prodDate|date:'yyyy-MM-dd'" (ngModelChange)="selectedRow.prodDate=$event">
+					</mat-form-field>
+					<div>
+					  <label>Active?</label><br/>
+					  <mat-radio-group name="appActive" [(ngModel)]="selectedRow.active">
+						  <mat-radio-button value="0">Yes</mat-radio-button>&nbsp;&nbsp;
+						  <mat-radio-button value="1">Completed</mat-radio-button>&nbsp;&nbsp;
+						  <mat-radio-button value="2">Pending</mat-radio-button>&nbsp;&nbsp;
+						  <mat-radio-button value="3">Cancelled</mat-radio-button>
+					  </mat-radio-group>
+					</div>
+					<editable-table [rows]="selectedRow.roles" [columns]="globalService.roleColumns"></editable-table>
+				</div>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>

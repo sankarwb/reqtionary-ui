@@ -3,9 +3,9 @@
     <div class="flex-box-column-justify-center" style="width: 93%; height: 20%; margin: 1%;">
         <!-- Agile Filters -->
         <div style="display: flex; border-bottom: 1px solid var(--border-line-color);">
-            <artifact-reqtype style="width: 50%;" [applicationId]="application.id"
+            <artifact-reqtype style="width: 50%;"
                 (changeRequirementType)="onRequirementTypeChange($event)"></artifact-reqtype>
-            <artifact-filters style="width: 50%;" [applicationId]="application.id"
+            <artifact-filters style="width: 50%;"
                 (changeSprint)="onSprintChange($event)"></artifact-filters>
         </div>
         <!-- Agile Artifacts -->

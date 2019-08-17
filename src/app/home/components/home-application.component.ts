@@ -95,10 +95,10 @@ import { AppRoute } from 'src/app/app-route.enum';
 
 export class HomeApplicationComponent implements OnInit, OnDestroy {
 
-    readonly agile = AppRoute.agile;
-    readonly defects = AppRoute.defects;
-    readonly backlog = AppRoute.backlog;
-    readonly permdoc = AppRoute.permdoc;
+    readonly agile = AppRoute.AGILE;
+    readonly defects = AppRoute.DEFECTS;
+    readonly backlog = AppRoute.BACKLOG;
+    readonly permdoc = AppRoute.PERMENANT_DOCUMENTATION;
     @Input() application: Application;
     defectsProjectId: number;
     backlogProjectId: number;
@@ -121,11 +121,10 @@ export class HomeApplicationComponent implements OnInit, OnDestroy {
     }
 
     route(uri: string): void {
-        this.globalService.currentApplicationId = this.application.id;
         this.globalService.currentDefectsProjectId = this.defectsProjectId;
         this.globalService.currentBacklogProjectId = this.backlogProjectId;
         this.globalService.currentPermDocProjectId = this.permdocProjectId;
-        let url = `/home/${this.globalService.employee.id}/${uri}/${this.globalService.currentApplicationId}`;
+        let url = `/home/${this.globalService.employee.id}/${uri}/${this.application.id}`;
         switch (uri) {
             case 'defects':
                 url += `/${this.globalService.currentDefectsProjectId}`;

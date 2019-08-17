@@ -12,6 +12,7 @@ import {
     ArtifactAttributesComponent,
     ArtifactCommentsComponent,
     ArtifactAssociationsComponent,
+    SelectAssociationDialog,
     ArtifactAttachmentsComponent,
     ArtifactHistoryComponent
 } from './components';
@@ -20,10 +21,13 @@ import {ArtifactsService} from '../shared/services';
 
 const routes: Routes = [
     {
-        path: ':applicationId/:requirementTypeId/create',
-        component: ArtifactComponent
+        path: ':applicationId/:projectId/:requirementTypeId/create',
+        component: ArtifactComponent,
+        resolve: {
+            result: ArtifactResolve
+        }
     },{
-        path: ':applicationId/:requirementTypeId/edit/:artifactId',
+        path: ':applicationId/:projectId/:requirementTypeId/edit/:artifactId',
         component: ArtifactComponent,
         resolve: {
             result: ArtifactResolve
@@ -43,13 +47,15 @@ const routes: Routes = [
         ArtifactAttributesComponent,
         ArtifactCommentsComponent,
         ArtifactAssociationsComponent,
+        SelectAssociationDialog,
         ArtifactAttachmentsComponent,
         ArtifactHistoryComponent
     ],
     providers: [
         ArtifactsService,
         ArtifactResolve
-    ]
+    ],
+    entryComponents: [SelectAssociationDialog]
 })
 
 export class ArtifactModule {}

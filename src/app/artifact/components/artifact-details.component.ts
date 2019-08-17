@@ -1,6 +1,7 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
 
 import {Artifact, Attribute} from '../../models';
+import { ArtifactAttributesComponent } from './artifact-attributes.component';
 
 @Component({
     selector: 'artifact-details',
@@ -21,9 +22,10 @@ import {Artifact, Attribute} from '../../models';
 })
 
 export class ArtifactDetailsComponent implements OnInit {
-    
+    @ViewChild(ArtifactAttributesComponent, {static: true}) attributeComponent: ArtifactAttributesComponent;
     @Input() attributes: Attribute[];
     @Input() artifact: Artifact;
+    @Input() parentArtifacts: Artifact[];
 
     constructor() {}
 

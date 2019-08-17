@@ -1,0 +1,82 @@
+<style type="text/css">
+	label {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+	legend {margin: 0px;}
+	table {margin: 0px !important;}
+	legend + a {
+		position: absolute;
+	    right: 32px;
+	    top: 4px;
+	}
+</style>
+<div class="col-md-10 col-sm-10 col-xs-10" style="padding-right: 0px;">
+	<mat-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabChange($event)">
+		<mat-tab label="List">
+			<searchable-table [rows]="globalService.attributes" [columns]="columns" (itemSelected)="onItemSelected($event)"></searchable-table>
+		</mat-tab>
+		<mat-tab label="{{label}}">
+			<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;" *ngIf="selectedRow">
+				<form role="form" id="frmDetails" class="col-md-5 col-sm-5 col-xs-12 form-horizontal">
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="attributeName" placeholder="Name" [(ngModel)]="selectedRow.name" 
+					  		[disabled]="selectedRow.system===1 || selectedRow.system===-1">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <textarea matInput name="attributeDesc" placeholder="Description" [(ngModel)]="selectedRow.desc"
+					  			[disabled]="selectedRow.system===1 || selectedRow.system===-1"></textarea>
+					</mat-form-field>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+					  <label>Attribute Type</label><br/>
+					  <mat-radio-group name="attributeType" [(ngModel)]="selectedRow.type">
+						  <mat-radio-button [value]="TEXT_INPUT" [disabled]="selectedRow.id !== 0 && selectedRow.type !== TEXT_INPUT">Text Input</mat-radio-button><br/>
+						  <mat-radio-button [value]="NUMERIC_INPUT" [disabled]="selectedRow.id !== 0 && selectedRow.type !== NUMERIC_INPUT">Numeric Input</mat-radio-button><br/>
+						  <mat-radio-button [value]="DATE_INPUT" [disabled]="selectedRow.id !== 0 && selectedRow.type !== DATE_INPUT">Date Input</mat-radio-button><br/>
+						  <mat-radio-button [value]="COMBO_BOX" [disabled]="selectedRow.id !== 0 && selectedRow.type !== COMBO_BOX">Combo Box</mat-radio-button><br/>
+						  <mat-radio-button [value]="CHECK_BOX" [disabled]="selectedRow.id !== 0 && selectedRow.type !== CHECK_BOX">Check Box</mat-radio-button><br/>
+						  <mat-radio-button [value]="RADIO_BOX" [disabled]="selectedRow.id !== 0 && selectedRow.type !== RADIO_BOX">Radio Button</mat-radio-button>
+					  </mat-radio-group>
+					</div>
+				</form>
+				<div class="col-md-3 col-sm-3 col-xs-6" style="margin-left: 30px !important;overflow-y: scroll;max-height: 315px;"
+					*ngIf="selectedRow.type === COMBO_BOX || selectedRow.type === CHECK_BOX || selectedRow.type === RADIO_BOX">
+					<legend>Attribute Values: </legend>
+					<a class="glyphicon glyphicon-plus pull-right" (click)="newRow(true)"></a>
+					<table class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th style="width: 10%;text-align: center;">Values</th>
+								<th style="width: 0.1%;">Default</th>
+								<th style="width: 0.1%;">Order</th>
+								<th style="width: 0.1%;">Active?</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let value of selectedRow.values;">
+								<td contenteditable="true" (input)="onEditValue($event, value)">{{value.value}}</td>
+								<td>
+									<mat-select [ngModel]="value.defaultType" (ngModelChange)="onDefaultTypeChange($event,value)">
+										<mat-option value="1">Yes</mat-option>
+										<mat-option value="0">No</mat-option>
+									</mat-select>
+								</td>
+								<td style="height: 10px;">
+									<mat-form-field>
+									  <input matInput name="valueOrder" type="number" [ngModel]="value.order" min="1" 
+									  [max]="selectedRow.values.length" 
+									  (ngModelChange)="onOrderChange($event,'order',value)">
+									</mat-form-field>
+								</td>
+								<td style="text-align: center;">
+									<span (click)="onDelete(value.active,value)"
+									[ngClass]="{'glyphicon glyphicon-trash':(value.active===1),'glyphicon glyphicon-refresh':(value.active===0)}">
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>

@@ -1,11 +1,35 @@
-<div class="flex-box-row" style="padding: 1%; border: 1px solid #E5E8E8; border-radius: 4px;">
-    <user-thumbnail style="margin-top: 4px;" [src]="'./../../../assets/user_thumbnail.jpg'" [medium]="true"></user-thumbnail>
-    <div class="flex-box-column">
-        <span style="color: #70757B;">
-            <span style="font-size: 14px; font-weight: bold;">{{by}}</span>
-            <span style="color: #E5E8E8; padding: 1%;"> &bull; </span>
-            <span style="font-size: 12px;">{{conversation?.time}}</span>
-        </span>
-        <article style="color: #262626; font-size: 12px; margin-top: 1%;">{{conversation?.comment}}</article>
+<div class="flex-box-column" style="border: 1px solid #E5E8E8; border-radius: 4px;">
+    <div class="flex-box-row" style="padding: 1%;">
+        <user-thumbnail style="margin-top: 4px;" [src]="'./../../../assets/user_thumbnail.jpg'" [medium]="true"></user-thumbnail>
+        <div class="flex-box-column">
+            <span style="color: #70757B;">
+                <span style="font-size: 14px; font-weight: bold;">{{by}}</span>
+                <span style="color: #E5E8E8; padding: 1%;"> &bull; </span>
+                <span style="font-size: 12px;">{{conversation?.time}}</span>
+            </span>
+            <article style="color: #262626; font-size: 12px; margin-top: 1%;">{{conversation?.comment}}</article>
+            <a style="font-size: 12px; margin-top: 1%;" *ngIf="conversation.comments.length" (click)="showComments=!showComments;">{{showComments?'HIDE':'SHOW'}} COMMENTS 
+                <!-- <mat-icon *ngIf="!showComments">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="showComments">keyboard_arrow_up</mat-icon> -->
+            </a>
+        </div>
+    </div>
+    <span *ngIf="showComments">
+        <div class="flex-box-row" style="padding: 1% 1% 1% 6%; border-top: 1px solid #E5E8E8;" *ngFor="let comment of conversation.comments;">
+            <user-thumbnail style="margin-top: 4px;" [src]="'./../../../assets/user_thumbnail.jpg'" [medium]="true"></user-thumbnail>
+            <div class="flex-box-column" style="width: 100%;">
+                <span style="color: #70757B;">
+                    <span style="font-size: 14px; font-weight: bold;">{{by}}</span>
+                    <span style="color: #E5E8E8; padding: 1%;"> &bull; </span>
+                    <span style="font-size: 12px;">{{comment?.time}}</span>
+                </span>
+                <article style="color: #262626; font-size: 12px; margin-top: 1%;">{{comment?.comment}}</article>
+            </div>
+        </div>
+    </span>
+    <div class="flex-box-column" style="padding: 1%; border-top: 1px solid #E5E8E8;">
+        <label style="color: #70757B; font-size: 10px;">REPLY TO A CONVERSATION</label>
+        <textarea style="margin: 1% 0;" rows="2" #comment></textarea>
+        <a style="font-size: 10px;" (click)="addComment(comment.value); comment.value='';">SUBMIT</a>
     </div>
 </div>

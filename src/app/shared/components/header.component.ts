@@ -5,6 +5,7 @@ import {
 } from '@angular/router';
 import {filter} from 'rxjs/operators';
 
+import {AppRoute} from '../../app-route.enum';
 import {GlobalSharedService, EventsService} from '../../services';
 
 @Component({
@@ -12,7 +13,7 @@ import {GlobalSharedService, EventsService} from '../../services';
   template: `
     <div style="display: flex; align-items: stretch; height: 75px; font-size: 16px;">
         <div style="display: flex; align-items: center;">
-            <a mat-button (click)="routeHome()">
+            <a mat-button (click)="routeToHome()">
                 <strong style="color: var(--theme-color);font-weight: bold;" [style.fontSize]="(resizeLogo?40:26)+'px'">
                     {{resizeLogo?' W ':' WINDBRICKS '}}
                 </strong>
@@ -32,6 +33,7 @@ import {GlobalSharedService, EventsService} from '../../services';
                 <app-search-box *ngIf="resizeLogo" (searchTextChange)="searchChange($event)"></app-search-box>
                 <a mat-button style="padding-left: 5px;">Home</a>
                 <a mat-button style="padding-left: 5px;">Org Chart</a>
+                <a mat-button style="padding-left: 5px;" (click)="routeToAdmin()">Admin Settings</a>
                 <app-search-box *ngIf="!resizeLogo" (searchTextChange)="searchChange($event)"></app-search-box>
             </div>
             <user-thumbnail [src]="'./../../../assets/user_thumbnail.jpg'" [employee]="globalService.employee"></user-thumbnail>
@@ -105,8 +107,12 @@ export class HeaderComponent {
         });
     }
 
-    routeHome(): void {
-        this.router.navigate(['home', this.globalService.employee.id]);
+    routeToHome(): void {
+        this.router.navigate([AppRoute.HOME, this.globalService.employee.id]);
+    }
+
+    routeToAdmin(): void {
+        this.router.navigateByUrl(AppRoute.ADMIN_SETTINGS);
     }
 
     searchChange(searchTxt: string): void {

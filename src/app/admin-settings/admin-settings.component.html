@@ -1,0 +1,76 @@
+<div class="flex-box-row">
+    <div class="flex-box-column" style="width: 13%;">
+        <span style="background: #212121; cursor: pointer;" *ngFor="let routeLink of leftNavItems;">
+            <label style="color: white; margin: 5px;"><a [routerLink]="routeLink.url">{{routeLink.label}}</a></label>
+        </span>
+    </div>
+    <div class="flex-box-row" style="width: 87%;">
+        <router-outlet (activate)="onRouterActivate($event)"></router-outlet>
+    </div>
+</div>
+<!-- <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened="true" class="sideNav">
+        <mat-grid-list cols="1" rowHeight="6:1">
+            <mat-grid-tile style="background: #212121; opacity: 0.27; text-align: center; cursor: pointer;" *ngFor="let routeLink of leftNavItems;">
+                <label style="color: white;"><a [routerLink]="routeLink.url">{{routeLink.label}}</a></label>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="app-breadcrumb">
+            <ul class="breadcrumb" style="background: transparent; flex: 1;">
+                <li><a routerLink="/home" routerLinkActive="active" class="active">Home</a></li>
+                <li *ngIf="breadcrumb !==''">Manage {{breadcrumb}}</li>
+            </ul>
+            <button mat-raised-button color="basic" style="margin-right: 20px;" (click)="onSave(childComp)" *ngIf="action!==2">{{(action===0)?'Create':'Save'}}</button>
+        </div>
+        <router-outlet (activate)="onRouterActivate($event)"></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container> -->
+<!-- <div class="col-md-12">
+	<div class="well col-md-2" style="margin: 0px;">
+        <ul class="nav nav-list">
+            <li>
+            	<label class="tree-toggler nav-header">
+            		<a routerLink="./editorganization">Edit Organization</a>
+            	</label>
+                <ul class="nav nav-list tree">
+                    <li><a routerLink="./managedivision">Manage Division</a></li>
+                    <li><a routerLink="./manageapplicationgroup">Manage Application Group</a></li>
+                    <li><a routerLink="./manageapplication">Manage Applicaton</a></li>
+                    <li><a routerLink="./managesprint">Manage Sprint</a></li>
+                    <li><label class="tree-toggler nav-header">Manage</label>
+                        <ul class="nav nav-list tree">
+                            <li><a routerLink="./requirementtype">Manage Type</a></li>
+                            <li><a routerLink="./attribute">Manage Attribuute</a></li>
+                            <li><a routerLink="./managerelease">Manage Program</a></li>
+                            <li><a routerLink="./managestatus">Manage Sprint Status</a></li>
+                            <li><a routerLink="./managephase">Manage Phase</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li><label class="tree-toggler nav-header"><a routerLink="./manageemployee">Manage Employee</a></label>
+                <ul class="nav nav-list tree">
+                    <li><a routerLink="./managerole">Manage Roles</a></li>
+                    <li><a routerLink="./managevendor">Manage Vendor</a></li>
+                    <li><a routerLink="./managedesignation">Manage Designation</a></li> -->
+                    <!-- <li><label class="tree-toggler nav-header">Manage Logs</label>
+                        <ul class="nav nav-list tree">
+                            <li><a href="#">View Logs</a></li>
+                        </ul>
+                    </li> -->
+                <!-- </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="app-breadcrumb">
+        <legend class="col-md-10" *ngIf="breadcrumb!==''">Manage {{breadcrumb}}</legend>
+    </div>
+	<router-outlet></router-outlet>
+	<div style="position: relative; bottom: 10px; right: 0px;" class="pull-right">
+        <button class="btn btn-default btn-sm">Cancel</button>
+		<button class="btn btn-primary btn-sm" [disabled]="action===2" (click)="onSave()">{{(action===0)?'Create':'Save'}}</button>
+	</div>
+</div> -->

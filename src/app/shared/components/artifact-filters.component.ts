@@ -21,6 +21,7 @@ import {
     Project
 } from "../../models";
 import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: 'artifact-filters',
@@ -103,9 +104,8 @@ import { Subscription } from "rxjs";
 })
 export class ArtifactFiltersComponent implements OnInit, OnDestroy {
     
-    @ViewChild('group') btnsToggleGroup: MatButtonToggleGroup;
+    @ViewChild('group', {static: true}) btnsToggleGroup: MatButtonToggleGroup;
     @Input() agileLayout: boolean;
-    @Input() applicationId: number;
     private selectedSprint: Project;
     private releases: Release[];
     private get employees(): Employee[] {
@@ -122,7 +122,8 @@ export class ArtifactFiltersComponent implements OnInit, OnDestroy {
     constructor(
         private employeeService: EmployeeService,
         private projectsService: ProjectsService,
-        private artifactsService: ArtifactsService
+        private artifactsService: ArtifactsService,
+        private route: ActivatedRoute
     ) {
         this.selectedSprint = new Project();
         this.selectedSprint.name = 'Select Sprint';
@@ -132,13 +133,13 @@ export class ArtifactFiltersComponent implements OnInit, OnDestroy {
         if (this.agileLayout) {
             //this.btnsToggleGroup.value = 'card';
             
-            const epicsSubscription = this.artifactsService.parentArtifacts(this.applicationId)
+            const epicsSubscription = this.artifactsService.parentArtifacts(this.route.snapshot.params.applicationId)
                 .subscribe(parentArtifacts => {
                     this.parentArtifacts = parentArtifacts;
                 });
             this.subscriptions.push(epicsSubscription);
         }
-        const releasesSubscription = this.projectsService.getProjectsByApplication(this.applicationId)
+        const releasesSubscription = this.projectsService.getProjectsByApplication(this.route.snapshot.params.applicationId)
                 .subscribe(releases => {
                     this.releases = releases;
                     if (this.releases.length) {

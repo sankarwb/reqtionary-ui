@@ -1,4 +1,5 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
 /* @font-face {
     font-family: franklin;
     src: url("./assets/fonts/FRABK.TTF");

@@ -21,10 +21,10 @@ export class AppComponent {
     if (!this.globalService.employee) {
       this.router.navigateByUrl('/login');
     } else {
-      // this.router.navigate(['/home', this.globalService.employee.id]);
       const subscription = this.http.get<Employee>(`${employeeById.replace(':employeeId', this.globalService.employee.id.toString())}`)
       .subscribe(employee => {
         this.globalService.employee = employee;
+        this.router.navigate(['/home', employee.id]);
         subscription.unsubscribe();
       });
     }

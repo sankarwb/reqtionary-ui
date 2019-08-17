@@ -1,10 +1,11 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-
-import {EventsService} from "../../services";
-import {Artifact, Application, Attribute} from '../../models';
-import { EmployeeService } from '../../shared/services';
 import { Subscription } from 'rxjs';
+
+import {EventsService, GlobalSharedService} from "../../services";
+import {Artifact, Application, Attribute} from '../../models';
+import { EmployeeService, ArtifactsService } from '../../shared/services';
+import { ArtifactDetailsComponent } from './artifact-details.component';
 
 @Component({
     selector: 'artifact',
@@ -20,38 +21,39 @@ import { Subscription } from 'rxjs';
             font-weight: bold;
             padding: 4px 4px 4px 0px;
         }
-        `
+        `,
+        `.save-btn {
+            color: #C3D6FC; font-size: 12px; border: 1px solid #BCD1FC; border-radius: 20px; background-color: #F8F9FB; padding: 10px 14px;
+        }`
     ]
 })
 
 export class ArtifactComponent implements OnInit, OnDestroy {
-    
+    @ViewChild(ArtifactDetailsComponent, {static: true}) detailsComponent: ArtifactDetailsComponent;
     activeSection: string;
     attributes: Attribute[];
     artifact: Artifact;
+    parentArtifacts: Artifact[];
     application: Application;
     private subscriptions: Subscription[] = [];
 
     constructor(
         private eventsService: EventsService,
         private employeeService: EmployeeService,
+        private artifactService: ArtifactsService,
+        private globalService: GlobalSharedService,
         private route: ActivatedRoute
     ) {
         this.application = new Application();
-        const paramSubscription = this.route.params.subscribe(params => {
-            this.application.id = params.applicationId;
-        });
-        this.subscriptions.push(paramSubscription);
-        const queryparamSubscription = this.route.queryParams.subscribe(queryParams => {
-            this.application.name = queryParams.applicationName;
-        });
-        this.subscriptions.push(queryparamSubscription);
+        this.application.id = this.route.snapshot.params.applicationId;
+        this.application.name = this.route.snapshot.queryParams.applicationName;
     }
 
     ngOnInit() {
         this.eventsService.selectedApplication(this.application.name);
         this.attributes = this.route.snapshot.data['result']['attributes'];
         this.artifact = this.route.snapshot.data['result']['artifact'];
+        this.parentArtifacts = this.route.snapshot.data['result']['parentArtifacts'];
         if (!this.employeeService.employees) {
             const subscription = this.employeeService.getEmployeesByApplication(this.application.id)
                     .subscribe(employees => {
@@ -63,6 +65,22 @@ export class ArtifactComponent implements OnInit, OnDestroy {
 
     onChangeSection(section: string): void {
         this.activeSection = section;
+    }
+
+    actionArtifact() {
+        this.artifact.user = this.globalService.employee;
+        if (!this.artifact.id) {
+            this.artifact.orgId = this.globalService.employee.orgId;
+            this.artifact.projectId = this.route.snapshot.params.projectId;
+            this.artifact.applicationId = this.route.snapshot.params.applicationId;
+            this.artifact.requirementTypeId = this.route.snapshot.params.requirementTypeId;
+        }
+        if (!!this.detailsComponent) {
+            this.detailsComponent.attributeComponent.getAttributeSelections();
+        }
+        this.subscriptions.push(this.artifactService.actionArtifact(this.artifact).subscribe(result => {
+            this.artifact = result;
+        }));
     }
 
     ngOnDestroy() {

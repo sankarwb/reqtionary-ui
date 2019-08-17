@@ -1,0 +1,95 @@
+<style type="text/css">
+	label, th {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+	.tooltip {
+	    position: relative;
+	    display: inline-block;
+	    border-bottom: 1px dotted black;
+	}
+
+	.tooltip .tooltiptext {
+	    visibility: hidden;
+	    width: 200px;
+	    background-color: black;
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 6px;
+	    padding: 5px 0;
+
+	    /* Position the tooltip */
+	    position: absolute;
+	    z-index: 1;
+	}
+
+	.tooltip:hover .tooltiptext {
+	    visibility: visible;
+	}
+</style>
+<div class="col-md-12 col-sm-12 col-xs-12" style="padding-right: 0px;">
+	<mat-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabChange($event)">
+		<mat-tab label="List">
+			<searchable-table [rows]="globalService.applications" [columns]="columns" (itemSelected)="onItemSelected($event)">
+			</searchable-table>
+		</mat-tab>
+		<mat-tab label="{{label}}">
+			<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;" *ngIf="selectedRow">
+				<form role="form" id="frmDetails" #form="ngForm" class="col-md-5 col-sm-5 col-xs-12 form-horizontal">					
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12" [ngStyle]="{'borderLeft':(appName.touched && appName.invalid)?'solid 2px red':'none'}">
+					  <input matInput name="appName" placeholder="Name" [(ngModel)]="selectedRow.name" #appName="ngModel" required>
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <textarea matInput name="appDesc" placeholder="Description" [(ngModel)]="selectedRow.desc">
+					  </textarea>
+					</mat-form-field>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+					  <label>Active?</label><br/>
+					  <mat-radio-group name="appActive" [(ngModel)]="selectedRow.active">						  
+						  <mat-radio-button value="1">Yes</mat-radio-button>
+						  <mat-radio-button value="0">No</mat-radio-button>
+					  </mat-radio-group>
+					</div>
+					<mat-form-field>
+						<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Division" name="division" #division="ngModel"
+							[(ngModel)]="selectedRow.divId" style="margin-top: 20px;" [ngStyle]="{'borderLeft':(division.touched && selectedRow.divId === 0)?'solid 2px red':'none'}" required>
+						<mat-option *ngFor="let div of globalService.divisions" [value]="div.id">{{div.name}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Application Group" name="appGroup" #appGrp="ngModel"
+							[(ngModel)]="selectedRow.appGrpId" style="margin-top: 25px;" [ngStyle]="{'borderLeft':(appGrp.touched && selectedRow.appGrpId === 0)?'solid 2px red':'none'}" required>
+						<mat-option *ngFor="let appGrp of globalService.appGroups" [value]="appGrp.id">{{appGrp.name}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;">
+					  <textarea matInput name="appComments" placeholder="Comments" [(ngModel)]="selectedRow.comments"></textarea>
+					</mat-form-field>
+				</form>
+				<!-- <div class="col-md-6 col-sm-6 col-xs-12" style="margin-left: 30px !important;">
+					<editable-table [rows]="selectedRow.roles" [columns]="globalService.roleColumns"></editable-table>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12" style="margin-left: 30px !important;" [ngStyle]="{'borderLeft':(form.valid && selectedRow.agileStatusValues && selectedRow.agileStatusValues.length===1)?'solid 2px red':'none'}">
+					<editable-table [title]="'Agile Status Values'" [rows]="selectedRow.agileStatusValues" 
+					[columns]="[{key:'agileStatus',value:'Status',width:'40'},{key:'statusOrder',value:'Order',width:'40'}]"></editable-table>
+				</div> -->
+			</div>
+		</mat-tab>
+		<mat-tab label="Types" *ngIf="requirementTypes">
+		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;" *ngFor="let reqType of requirementTypes;"
+			 [style.border-left]="'4px solid '+reqType.color">
+			<mat-checkbox name="obj{{reqType.id}}" [disabled]="reqType.disabled" [(ngModel)]="reqType.checked" 
+						(change)="onSelect($event,'object',reqType)">
+				{{reqType.name+'('+reqType.id}})
+			</mat-checkbox> 
+			<!-- <a style="cursor: pointer;color: #dcdcdc; text-decoration: underline;" (click)="onSelectAll(reqType)"
+				*ngIf="reqType.attributes.length > 0">all</a> -->
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<mat-checkbox class="col-md-3 col-sm-4 col-xs-6" name="attr{{attr.id}}" [disabled]="attr.disabled" [(ngModel)]="attr.checked" 
+							 *ngFor="let attr of fileterAttributes(reqType.attributes);" (change)="onSelect($event,'attribute',reqType,attr)">
+					{{attr.name+'('+attr.id}}) &nbsp;&nbsp;
+				</mat-checkbox>
+			</div>
+		</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>

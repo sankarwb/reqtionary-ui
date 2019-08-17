@@ -1,0 +1,42 @@
+<style type="text/css">
+	label, th {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+</style>
+<div class="col-md-10 col-sm-10 col-xs-10" style="padding-right: 0px;">
+	<mat-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabChange($event)">
+		<mat-tab label="List">
+			<searchable-table [rows]="globalService.appGroups" [columns]="columns" [parentList]="globalService.divisions" 
+			(itemSelected)="onItemSelected($event)">				
+			</searchable-table>
+		</mat-tab>
+		<mat-tab label="{{label}}">
+			<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;" *ngIf="selectedRow">
+				<form role="form" id="frmDetails" #form="ngForm" class="col-md-5 col-sm-5 col-xs-12 form-horizontal">
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+						<mat-select placeholder="Division" name="division" #division="ngModel" 
+							*ngIf="selectedRow" [(ngModel)]="selectedRow.divId" [ngStyle]="{'borderLeft':(division.touched && selectedRow.divId === 0)?'solid 2px red':'none'}" required>
+							<mat-option *ngFor="let div of globalService.divisions" [value]="div.id">{{div.name}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12" [ngStyle]="{'borderLeft':(appGrpName.touched && appGrpName.invalid)?'solid 2px red':'none'}">
+					  <input matInput name="appGrpName" #appGrpName="ngModel" placeholder="Name" [(ngModel)]="selectedRow.name" required>
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <textarea matInput name="appGrpDesc" placeholder="Description" [(ngModel)]="selectedRow.desc"></textarea>
+					</mat-form-field>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+					  <label>Active?</label><br/>
+					  <mat-radio-group name="appGroupActive" [(ngModel)]="selectedRow.active">						  
+						  <mat-radio-button value="1">Yes</mat-radio-button>
+						  <mat-radio-button value="0">No</mat-radio-button>
+					  </mat-radio-group>
+					</div>
+				</form>
+				<div class="col-md-6 col-sm-6 col-xs-6" style="margin-left: 30px !important;">
+					<editable-table [rows]="selectedRow.roles" [columns]="globalService.roleColumns"></editable-table>
+				</div>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>

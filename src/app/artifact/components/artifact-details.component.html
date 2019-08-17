@@ -27,27 +27,28 @@
                 <div class="flex-box-column custom-select">
                     <label>PARENT</label>
                     <select name="parentId" [(ngModel)]="artifact.parentId">
-                        <option>Select Parent</option>
+                        <option value="0">Select Parent</option>
+                        <option [value]="parentArtifact.id" *ngFor="let parentArtifact of parentArtifacts;">{{parentArtifact.name}}</option>
                     </select>
                 </div>
                 <div class="flex-box-row">
                     <div class="flex-box-column">
                         <label>EFFECTIVE DATE</label>
-                        <input type="text" name="effectiveDate" [(ngModel)]="artifact.effectiveDate">
+                        <input type="date" name="effectiveDate" [(ngModel)]="artifact.effectiveDate">
                     </div>
                     <div class="flex-box-column">
                         <label>DISPLAY SEQUENCE</label>
-                        <input type="text" name="displaySequence" [(ngModel)]="artifact.displaySequence">
+                        <input type="number" name="displaySequence" [(ngModel)]="artifact.displaySequence">
                     </div>
                 </div>
                 <div class="flex-box-row">
                     <div class="flex-box-column">
                         <label>EXPECTED POINTS</label>
-                        <input type="text" name="expectedPoints" [(ngModel)]="artifact.expectedPoints">
+                        <input type="number" name="expectedPoints" [(ngModel)]="artifact.expectedPoints">
                     </div>
                     <div class="flex-box-column">
                         <label>ACTUAL POINTS</label>
-                        <input type="text" name="actualPoints" [(ngModel)]="artifact.actualPoints">
+                        <input type="number" name="actualPoints" [(ngModel)]="artifact.actualPoints">
                     </div>
                 </div>
             </div>

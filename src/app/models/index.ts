@@ -8,3 +8,4 @@ export * from './requirement-type.model';
 export * from './attribute.model';
 export * from './conversation.model';
 export * from './comment.model';
+export * from './artifact-attribute.model';

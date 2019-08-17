@@ -1,6 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 
-import {Artifact, Attribute} from '../../models';
+import {Artifact, Attribute, ArtifactAttribute} from '../../models';
 
 @Component({
     selector: 'artifact-attributes',
@@ -20,14 +20,42 @@ import {Artifact, Attribute} from '../../models';
     ]
 })
 
-export class ArtifactAttributesComponent implements OnInit {
-    
+export class ArtifactAttributesComponent implements OnDestroy {
+    private _artifact: Artifact;
     @Input() attributes: Attribute[];
-    @Input() artifact: Artifact;
-
-    constructor() {}
-
-    ngOnInit() {
-        
+    @Input() set artifact(artifact: Artifact) {
+        this._artifact = artifact;
+        if (this._artifact.attributes) {
+            this._artifact.attributes.forEach(attribute => {
+                this.selections[attribute.id] = attribute.value;
+            });
+        }
     }
+    get artifact(): Artifact {
+        return this._artifact;
+    }
+    private selections: {[key: number]: any} = {};
+
+    getAttributeSelections() {
+        if (!this.artifact.attributes) {
+            this.artifact.attributes = [];
+        }
+        this.artifact.attributes.forEach(attribute => {
+            attribute.value = Array.isArray(this.selections[attribute.id]) ? this.selections[attribute.id].join() : this.selections[attribute.id];
+        });
+        Object.keys(this.selections).forEach(selection => {
+            if (this.artifact.attributes.findIndex(attribute => attribute.id===parseInt(selection)) === -1) {
+                let attribute = new ArtifactAttribute();
+                attribute.id = parseInt(selection);
+                attribute.appObjectAttributeId = this.attributes.find(attribute => attribute.id===parseInt(selection)).appObjectAttributeId;
+                attribute.value = Array.isArray(this.selections[selection]) ? this.selections[selection].join() : this.selections[selection];
+                this.artifact.attributes.push(attribute);
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.getAttributeSelections();
+    }
+
 }

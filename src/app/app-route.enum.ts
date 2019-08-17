@@ -1,8 +1,10 @@
 export enum AppRoute {
-    home = 'home',
-    agile = 'agile',
-    defects = 'defects',
-    backlog = 'backlog',
-    permdoc = 'perm.doc',
-    artifact = 'artifact'
+    LOGIN = 'login',
+    HOME = 'home',
+    AGILE = 'agile',
+    DEFECTS = 'defects',
+    BACKLOG = 'backlog',
+    PERMENANT_DOCUMENTATION = 'permenant-documentation',
+    ARTIFACT = 'artifact',
+    ADMIN_SETTINGS = 'admin-settings'
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {GlobalSharedService} from '../../services';
 
 @Component({
@@ -77,16 +77,17 @@ export class NavigationPanelComponent implements OnInit {
     @Output() changeSection = new EventEmitter<string>();
     constructor(
         private globalService: GlobalSharedService,
-        public router: Router
+        public router: Router,
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit() {
-        this.activeSection = 'details';
-        this.changeSection.emit('details');
+        this.activeSection = 'associations';
+        this.changeSection.emit(this.activeSection);
     }
 
     navigate(uri: string): void {
-        let url = `/home/${this.globalService.employee.id}/${uri}/${this.globalService.currentApplicationId}`;
+        let url = `/home/${this.globalService.employee.id}/${uri}/${this.route.snapshot.params.applicationId}`;
         switch (uri) {
             case 'defects':
                 url += `/${this.globalService.currentDefectsProjectId}`;

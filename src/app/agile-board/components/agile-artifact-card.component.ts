@@ -45,7 +45,7 @@ export class AgileArtifactCardComponent implements OnInit, OnDestroy {
     }
 
     onEditClick(): void {
-        this.router.navigate([AppRoute.home, this.globalService.employee.id, AppRoute.artifact, this.applicationId, 'edit', this.artifact.id]);
+        this.router.navigate([AppRoute.HOME, this.globalService.employee.id, AppRoute.ARTIFACT, this.applicationId, 'edit', this.artifact.id]);
     }
 
     ngOnDestroy() {

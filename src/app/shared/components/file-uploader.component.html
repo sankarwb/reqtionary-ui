@@ -1,0 +1,10 @@
+<div class="flex-box-column-center"
+    style="width: 100%; color: #95989C; border: 1px dotted #70757B; border-radius: 6px;"
+    ng2FileDrop (fileOver)="fileOver($event)" [uploader]="uploader">
+    <mat-icon style="font-size: 50px; margin: 5% 0;">publish</mat-icon>
+    <input style="width: 0.1px; height: 0.1px; overflow: hidden;" type="file" name="files" id="file"
+        accept=".png, .jpg, .jpeg, .doc, .docx, .xml, .xls, .xlsx"
+        ng2FileSelect [uploader]="uploader"/>
+    <label for="file" style="margin-bottom: 5%;"><strong>Drag files here or click to upload!</strong></label>
+    <button (click)="upload()">Upload</button>
+</div>

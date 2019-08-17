@@ -11,7 +11,9 @@ import {
     agileStatusesByApplication,
     artifacts,
     agileArtifacts,
-    artifactById
+    artifactById,
+    associationsByArtifact,
+    actionArtifact
 } from '../../endpoints';
 import {
     RequirementType,
@@ -77,6 +79,17 @@ export class ArtifactsService {
     artifactById(artifactId: number): Observable<Artifact> {
         return this.http.get<Artifact>(
             `${artifactById
+                .replace(':artifactId', artifactId.toString())}`
+        );
+    }
+
+    actionArtifact(artifact: Artifact): Observable<Artifact> {
+        return this.http.post<Artifact>(`${actionArtifact}`, artifact);
+    }
+
+    associationByArtifact(artifactId: number): Observable<Artifact[]> {
+        return this.http.get<Artifact[]>(
+            `${associationsByArtifact
                 .replace(':artifactId', artifactId.toString())}`
         );
     }

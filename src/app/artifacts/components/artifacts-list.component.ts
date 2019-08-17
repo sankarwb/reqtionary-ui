@@ -87,7 +87,7 @@ export class ArtifactsListComponent implements OnInit, OnDestroy {
     }
 
     onGridLinkClick(data: any): void {
-        this.router.navigate([AppRoute.home, this.globalService.employee.id, AppRoute.artifact, this.application.id, this.requirementTypeId, 'edit', data], {queryParams: {applicationName: this.application.name}});
+        this.router.navigate([AppRoute.HOME, this.globalService.employee.id, AppRoute.ARTIFACT, this.application.id, this.projectId, this.requirementTypeId, 'edit', data], {queryParams: {applicationName: this.application.name}});
     }
 
     ngOnDestroy() {

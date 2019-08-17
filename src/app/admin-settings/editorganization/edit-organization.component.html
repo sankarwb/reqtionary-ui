@@ -1,0 +1,39 @@
+<style type="text/css">
+	label, th {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+</style>
+<div class="col-md-10 col-sm-10 col-xs-10" style="padding-right: 0px;">
+	<form class="form-horizontal" #form="ngForm" *ngIf="selectedRow">
+	    <div class="col-md-6 col-sm-6 col-xs-6">
+	      	<mat-form-field class="col-md-12 col-sm-12 col-xs-12" [ngStyle]="{'borderLeft':(orgName.touched && orgName.invalid)?'solid 2px red':'none'}">
+	      		<input matInput name="orgName" placeholder="Name" [(ngModel)]="selectedRow.name" #orgName="ngModel" required>
+			</mat-form-field>
+	      	<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+	      		<input matInput name="orgSName" placeholder="Short Name" [(ngModel)]="selectedRow.sName">
+			</mat-form-field>
+	      	<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+	      		<textarea matInput name="orgDesc" placeholder="Description" [(ngModel)]="selectedRow.desc"></textarea>
+			</mat-form-field>
+			<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+	      		<input matInput name="orgUrl" placeholder="URL" [(ngModel)]="selectedRow.url">
+			</mat-form-field>
+	    </div>
+	    <div class="col-md-6 col-sm-6 col-xs-6">
+	    	<div class="col-md-12">
+		    	<div class="form-group">		    		
+		    		<img [src]="selectedRow.logopath" width="100px" height="100px" class="col-md-offset-2">
+		    	</div>
+		    	<div class="form-group">			      
+			      <div class="col-md-10">
+			        <input type="text" class="form-control" id="Organizationlogo" name="orglogo" placeholder="Organization logo" >
+			      </div>
+			      <label for="Organizationlogo" class="col-md-2 control-label">Browse</label>
+			    </div>
+		    </div>
+		    <div class="col-md-12 col-sm-12 col-xs-12">
+				<editable-table [rows]="selectedRow.roles" [columns]="globalService.roleColumns"></editable-table>
+			</div>
+	    </div>
+	</form>
+</div>

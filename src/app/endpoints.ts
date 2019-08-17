@@ -8,6 +8,8 @@ export let parentArtifactsByApplication = '/artifacts/parent-artifacts/byApplica
 
 // CRUD artifact
 export let artifactById = '/artifacts/:artifactId';
+export let actionArtifact = '/artifacts/actionArtifact';
+export let associationsByArtifact = '/artifacts/associations/:artifactId';
 
 // artifact history
 export let recentActivity = '/artifact-history/recent-activity/byApplication/:applicationId';

@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {FileUploadModule} from 'ng2-file-upload';
 
 import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
 import {
@@ -9,6 +10,7 @@ import {
   RecentActivityComponent,
   DataGridComponent,
   SpinnerComponent,
+  FileUploaderComponent,
   ArtifactFiltersComponent,
   ArtifactReqtypesComponent,
   UserThumbnailComponent,
@@ -27,7 +29,8 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
   imports: [
     CommonModule,
     FormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FileUploadModule
   ],
   exports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
     RecentActivityComponent,
     DataGridComponent,
     SpinnerComponent,
+    FileUploaderComponent,
     ArtifactFiltersComponent,
     ArtifactReqtypesComponent,
     UserThumbnailComponent,
@@ -52,6 +56,7 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
     RecentActivityComponent,
     DataGridComponent,
     SpinnerComponent,
+    FileUploaderComponent,
     ArtifactFiltersComponent,
     ArtifactReqtypesComponent,
     UserThumbnailComponent,

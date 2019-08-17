@@ -4,6 +4,7 @@ import {
   Routes
 } from '@angular/router';
 
+import {AppRoute} from '../app-route.enum';
 import {AngularMaterialModule} from '../angularmaterial/angular-material.module';
 import {SharedModule} from '../shared/shared.module';
 import { ReqtionaryComponent } from './reqtionary.component';

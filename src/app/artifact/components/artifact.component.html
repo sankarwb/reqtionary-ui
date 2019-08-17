@@ -3,13 +3,13 @@
     <div class="flex-box-column-justify-center" style="width: 93%; height: 20%; margin: 1%;">
         <div style="display: flex; border-bottom: 1px solid var(--border-line-color);">
             <span style="flex: 1; color: #70757B; font-size: 30px;">{{artifact.id ? artifact.UID + ' - ' + artifact.name : 'Add New'}}</span>
-            <a style="color: #C3D6FC; font-size: 12px; border: 1px solid #BCD1FC; border-radius: 20px; background-color: #F8F9FB; padding: 10px 14px;">Save</a>
+            <a class="save-btn" (click)="actionArtifact()">Save</a>
         </div>
         <!-- Artifact -->
-        <artifact-details *ngIf="activeSection==='details'" [artifact]="artifact" [attributes]="attributes"></artifact-details>
-        <artifact-comments *ngIf="activeSection==='comments'" [comments]="artifact.comments"></artifact-comments>
-        <artifact-associations *ngIf="activeSection==='associations'"></artifact-associations>
-        <artifact-attachments *ngIf="activeSection==='attachments'"></artifact-attachments>
+        <artifact-details *ngIf="activeSection==='details'" [artifact]="artifact" [attributes]="attributes" [parentArtifacts]="parentArtifacts"></artifact-details>
+        <artifact-comments *ngIf="activeSection==='comments'" [artifact]="artifact"></artifact-comments>
+        <artifact-associations *ngIf="activeSection==='associations'" [artifact]="artifact"></artifact-associations>
+        <artifact-attachments *ngIf="activeSection==='attachments'" [artifact]="artifact"></artifact-attachments>
         <artifact-history *ngIf="activeSection==='history'"></artifact-history>
     </div>
 </div>

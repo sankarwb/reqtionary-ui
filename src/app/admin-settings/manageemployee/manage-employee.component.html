@@ -1,0 +1,67 @@
+<style type="text/css">
+	label, th {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+</style>
+<div class="col-md-10 col-sm-10 col-xs-10" style="padding-right: 0px;">
+	<mat-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabChange($event)">
+		<mat-tab label="List">
+			<searchable-table [rows]="globalService.employees" [columns]="columns" (itemSelected)="onItemSelected($event)">				
+			</searchable-table>
+		</mat-tab>
+		<mat-tab label="{{label}}">
+			<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;" *ngIf="selectedRow">
+				<form role="form" id="frmDetails" class="col-md-5 col-sm-5 col-xs-12 form-horizontal" 	
+					*ngIf="selectedRow">
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="empNumber" placeholder="Number" [(ngModel)]="selectedRow.UID">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="empFName" placeholder="First Name" [(ngModel)]="selectedRow.fName">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="empMName" placeholder="Middle Name" [(ngModel)]="selectedRow.mName">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="empLName" placeholder="Last Name" [(ngModel)]="selectedRow.lName">
+					</mat-form-field>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Designation" name="designation" 
+						style="margin-top: 10px;" [(ngModel)]="selectedRow.titleId">
+					   <mat-option *ngFor="let desig of globalService.designations" [value]="desig.id">{{desig.name}}</mat-option>
+					</mat-select>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Vendor" name="vendor" 
+						style="margin-top: 20px;" [(ngModel)]="selectedRow.vendorId">
+					   <mat-option *ngFor="let vendor of globalService.vendors" [value]="vendor.id">{{vendor.name}}</mat-option>
+					</mat-select>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="User Type" name="usertype" 
+						style="margin-top: 10px;" [(ngModel)]="selectedRow.type">
+					   <mat-option *ngFor="let type of globalService.userTypes;" [value]="type.id">{{type.name}}</mat-option>
+					</mat-select>
+					<mat-select class="col-md-12 col-sm-12 col-xs-12" placeholder="Time Zone" name="timezone" 
+						style="margin-top: 10px;" [(ngModel)]="selectedRow.timezone">
+					   <mat-option *ngFor="let zone of timeZones" [value]="zone.id">{{zone.name}}</mat-option>
+					</mat-select>
+					<div class="col-md-12 col-sm-12 col-xs-12" *ngIf="selectedRow">
+					  <label>Active?</label><br/>
+					  <mat-radio-group name="appActive" [(ngModel)]="selectedRow.active">						  
+						  <mat-radio-button value="1">Yes</mat-radio-button>
+						  <mat-radio-button value="0">No</mat-radio-button>
+					  </mat-radio-group>
+					</div>
+				</form>
+				<div class="col-md-6 col-sm-6 col-xs-12" style="margin-left: 30px !important;" *ngIf="selectedRow">
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="empDesig" placeholder="Email" [(ngModel)]="selectedRow.emailID">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput type="password" name="empPwd" placeholder="Password" [(ngModel)]="selectedRow.password">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput type="password" name="empRePwd" placeholder="Re-type Password" [(ngModel)]="selectedRow.changePassword">
+					</mat-form-field>
+					<label>Upload</label>
+				</div>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>

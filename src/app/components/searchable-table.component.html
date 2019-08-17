@@ -1,0 +1,47 @@
+<style type="text/css">
+	table {
+	  margin: 0 10px 10px 10px !important;
+	  max-height: 500px;
+	  min-width: 300px;
+	  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 
+	            0 8px 10px 1px rgba(0,0,0,.14), 
+	            0 3px 14px 2px rgba(0,0,0,.12);
+	}
+	th, td {padding: 0 24px !important;}
+	tr {
+	  border-bottom-width: 1px;
+	  border-bottom-style: solid;
+	  border-bottom-color:  #ccc;
+	  height: 48px;
+	}
+</style>
+<div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0;">
+	<table>
+		<thead>
+			<tr>
+				<td *ngFor="let column of columns;" contenteditable="true" 
+					id="{{column.key}}" [ngStyle]="{'width':column.width+'%'}"></td>
+			</tr>
+			<tr>
+				<th *ngFor="let column of columns;">{{column.value}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let row of copyRows;">
+				<td *ngFor="let column of columns;">
+					<span *ngIf="!column.dataType">{{row[column.key]}}</span>
+					<span *ngIf="column.dataType=='bool'">{{row[column.key]===1?'Yes':'No'}}</span>
+					<span *ngIf="column.dataType=='empName'">
+						<a style="cursor: pointer;" (click)="onclick($event,row)">{{row['fName']+' '+row['lName']}}</a>
+					</span>
+					<span *ngIf="column.dataType=='link'"><a style="cursor: pointer;" (click)="onclick($event,row)">{{row[column.key]}}</a></span>
+					<span *ngIf="column.dataType=='color'" [style.background-color]="row[column.key]" 
+							style="display: block;text-align: center;width: 100%;border-radius: 4px;">{{row[column.displayTextKey]}}</span>
+					<span *ngIf="column.dataType=='array'" [innerHTML]="toString(row[column.key])"></span>
+					<span *ngIf="column.dataType=='date'">{{row[column.key]|date}}</span>
+					<span *ngIf="column.dataType=='field'">{{getFieldName(row[column.key])}}</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -18,11 +18,11 @@ import {HomeResolver} from './resolvers/home.resolver';
 
 const routes: Routes = [
     {path: '', component: HomeComponent, resolve: {applications: HomeResolver}},
-    {path: `${AppRoute.agile}`, loadChildren: '../agile-board/agile-board.module#AgileBoardModule'},
-    {path: `${AppRoute.defects}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
-    {path: `${AppRoute.backlog}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
-    {path: `${AppRoute.permdoc}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
-    {path: `${AppRoute.artifact}`, loadChildren: '../artifact/artifact.module#ArtifactModule'}
+    {path: `${AppRoute.AGILE}`, loadChildren: '../agile-board/agile-board.module#AgileBoardModule'},
+    {path: `${AppRoute.DEFECTS}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: `${AppRoute.BACKLOG}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: `${AppRoute.PERMENANT_DOCUMENTATION}`, loadChildren: '../artifacts/artifacts.module#ArtifactsModule'},
+    {path: `${AppRoute.ARTIFACT}`, loadChildren: '../artifact/artifact.module#ArtifactModule'}
 ];
 
 @NgModule({

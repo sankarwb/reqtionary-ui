@@ -1,0 +1,31 @@
+<style type="text/css">
+	label, th {
+		color: rgba(0,0,0,.38);font-size: 100%;
+	}
+</style>
+<div class="col-md-10 col-sm-10 col-xs-10" style="padding-right: 0px;">
+	<mat-tab-group [selectedIndex]="selectedIndex" (selectChange)="onTabChange($event)">
+		<mat-tab label="List">
+			<searchable-table [rows]="globalService.vendors" [columns]="columns" (itemSelected)="onItemSelected($event)"></searchable-table>
+		</mat-tab>
+		<mat-tab label="{{label}}">
+			<div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;" *ngIf="selectedRow">
+				<form role="form" id="frmDetails" class="col-md-5 col-sm-5 col-xs-12 form-horizontal">					
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="Name" placeholder="Name" [(ngModel)]="selectedRow.name">
+					</mat-form-field>
+					<mat-form-field class="col-md-12 col-sm-12 col-xs-12">
+					  <input matInput name="desc" placeholder="Description" [(ngModel)]="selectedRow.desc">
+					</mat-form-field>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+					  <label>Active?</label><br/>
+					  <mat-radio-group name="Active" [(ngModel)]="selectedRow.active">						  
+						  <mat-radio-button value="1">Yes</mat-radio-button>
+						  <mat-radio-button value="0">No</mat-radio-button>
+					  </mat-radio-group>
+					</div>
+				</form>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>

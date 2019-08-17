@@ -1,6 +1,7 @@
 import { UserType } from '../shared/models/user-type.model';
 
 export class Employee {
+    orgId: number;
     id: number;
     uid: string;
     type: UserType;

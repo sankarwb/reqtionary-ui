@@ -1,0 +1,1 @@
+1. Filter parent artifacts that doesn't include current artifact. Make a separate service endpoint to send only ID & Name of artifacts
