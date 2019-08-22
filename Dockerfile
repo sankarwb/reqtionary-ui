@@ -1,4 +1,3 @@
-# base image
 FROM node:12.7.0
 
 # install chrome for protractor tests
@@ -6,19 +5,18 @@ FROM node:12.7.0
 #RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 #RUN apt-get update && apt-get install -yq google-chrome-stable
 
-# set working directory
-WORKDIR /app
+RUN mkdir -p /home/angular/app/node_modules && chown -R node:node /home/angular/app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+WORKDIR /home/angular/app
 
-# install and cache app dependencies
-COPY package.json /app/package.json
+COPY package*.json ./
+
 RUN npm install -g @angular/cli@7.3.9
+
 RUN npm install
 
-# add app
-COPY . /app
+COPY --chown=node:node . .
 
-# start app
-CMD ng serve --host 0.0.0.0
+EXPOSE 8080
+
+CMD ng serve
