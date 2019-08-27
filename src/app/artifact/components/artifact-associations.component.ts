@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, Inject} from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { Artifact } from '../../models';
+import { Artifact, RequirementType } from '../../models';
 import { ArtifactsService } from '../../shared/services';
 
 declare var d3: any;
@@ -25,7 +26,11 @@ export class ArtifactAssociationsComponent implements OnInit {
   width: any;
   height: any;
   simulation: any;
-  constructor(public dialog: MatDialog , private artifactService: ArtifactsService) {}
+  constructor(
+    private artifactService: ArtifactsService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     // TODO: make service call to get associations if artifactId is not 0
@@ -85,7 +90,10 @@ export class ArtifactAssociationsComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(SelectAssociationDialog, {
       width: '250px',
-      data: new Artifact()
+      data: {
+        applicationId: this.route.snapshot.params.applicationId,
+        projectId: this.route.snapshot.params.projectId
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -123,21 +131,52 @@ export class ArtifactAssociationsComponent implements OnInit {
 
 @Component({
   selector: 'select-association-dialog',
-  template: `<h1 mat-dialog-title>Select Association</h1>
+  template: `<h1 mat-dialog-title>Add</h1>
   <div mat-dialog-content>
-    <p>What's your favorite animal?</p>
     <mat-form-field>
-      <input matInput [(ngModel)]="data.name">
+      <mat-select placeholder="Select Type" (selectionChange)="onSelectReqtype($event.value)">
+        <mat-option *ngFor="let reqtype of reqtypes" [value]="reqtype">{{reqtype.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+    <mat-select placeholder="Select Artifact" (selectionChange)="onSelectArtifact($event.value)">
+      <mat-option *ngFor="let artifact of artifacts" [value]="artifact">{{artifact.name}}</mat-option>
+    </mat-select>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="selectedAssociation" cdkFocusInitial>Associate</button>
   </div>`
 })
 
 export class SelectAssociationDialog {
-  constructor(public dialogRef: MatDialogRef<SelectAssociationDialog>, @Inject(MAT_DIALOG_DATA) public data: Artifact) {}
+  reqtypes: RequirementType[];
+  artifacts: Artifact[];
+  selectedReqType: RequirementType;
+  selectedAssociation: any;
+  constructor(
+    public artifactsService: ArtifactsService,
+    public dialogRef: MatDialogRef<SelectAssociationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Artifact
+  ) {
+    this.artifactsService.requirementtypes(this.data.applicationId).subscribe(reqtypes => {
+      this.reqtypes = reqtypes;
+    });
+  }
+
+  onSelectReqtype(reqType: RequirementType): void {
+    this.selectedReqType = reqType;
+    this.artifactsService.artifacts(this.data.applicationId, this.data.projectId, reqType.id)
+    .subscribe(artifacts => {
+      this.artifacts = artifacts;
+    })
+  }
+
+  onSelectArtifact(artifact: Artifact): void {
+    this.selectedAssociation = {...this.selectedReqType, ...artifact};
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

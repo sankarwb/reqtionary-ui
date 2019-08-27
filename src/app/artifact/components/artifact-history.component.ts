@@ -1,21 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
-import {Artifact} from 'src/app/models';
+import {Artifact} from '../../models';
+import { ArtifactsService } from '../../shared/services';
 
 @Component({
     selector: 'artifact-history',
-    template: `
-    <div>History</div>
-    `
+    templateUrl: 'artifact-history.component.html',
+    styleUrls: ['artifact-history.component.css']
 })
 
 export class ArtifactHistoryComponent implements OnInit {
     
+    @Input()
     artifact: Artifact;
+    versions:any[];
+    titles:any[];
 
-    constructor() {}
+    constructor(private artifactSetvice: ArtifactsService) {}
 
     ngOnInit() {
-        
+        this.artifactSetvice.historyById(this.artifact.id).subscribe(response => {
+            this.titles = response.titles;
+            this.versions = response.history;
+        });
     }
 }

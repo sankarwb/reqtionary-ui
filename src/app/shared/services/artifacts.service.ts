@@ -13,7 +13,8 @@ import {
     agileArtifacts,
     artifactById,
     associationsByArtifact,
-    actionArtifact
+    actionArtifact,
+    artifactHistoryById
 } from '../../endpoints';
 import {
     RequirementType,
@@ -90,6 +91,13 @@ export class ArtifactsService {
     associationByArtifact(artifactId: number): Observable<Artifact[]> {
         return this.http.get<Artifact[]>(
             `${associationsByArtifact
+                .replace(':artifactId', artifactId.toString())}`
+        );
+    }
+
+    historyById(artifactId: number): Observable<any> {
+        return this.http.get<any>(
+            `${artifactHistoryById
                 .replace(':artifactId', artifactId.toString())}`
         );
     }

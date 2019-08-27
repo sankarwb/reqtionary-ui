@@ -1,0 +1,24 @@
+<table *ngIf="versions">
+    <thead>
+        <th class="col-md-2 col-sm-2 col-xs-12"></th>
+        <th class="col-md-5 col-sm-5 col-xs-12">
+        <mat-slider #ver1 min="0" [max]="versions.length-1" step="1" value="0" tickInterval="1"></mat-slider>
+        <h2>Version {{ver1.value}}</h2>
+        </th>
+        <th class="col-md-5 col-sm-5 col-xs-12">
+        <mat-slider #ver2 min="0" [max]="versions.length-1" step="1" [value]="versions.length===1?0:1" tickInterval="1"></mat-slider>
+        <h2>Version {{ver2.value}}</h2>
+        </th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let title of titles">
+        <td style="font-weight: bold;">{{title.value}}</td>
+        <td *ngIf="!title.type">{{versions[ver1.value][title.key]}}</td>
+        <td *ngIf="title.type==='html'" [innerHTML]="versions[ver1.value][title.key]"></td>
+        <td *ngIf="title.type==='date'">{{versions[ver1.value][title.key] | date}}</td>
+        <td *ngIf="!title.type">{{versions[ver2.value][title.key]}}</td>
+        <td *ngIf="title.type==='html'" [innerHTML]="versions[ver2.value][title.key]"></td>
+        <td *ngIf="title.type==='date'">{{versions[ver2.value][title.key] | date}}</td>
+        </tr>
+    </tbody>
+</table>

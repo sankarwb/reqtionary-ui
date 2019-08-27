@@ -10,6 +10,6 @@
         <artifact-comments *ngIf="activeSection==='comments'" [artifact]="artifact"></artifact-comments>
         <artifact-associations *ngIf="activeSection==='associations'" [artifact]="artifact"></artifact-associations>
         <artifact-attachments *ngIf="activeSection==='attachments'" [artifact]="artifact"></artifact-attachments>
-        <artifact-history *ngIf="activeSection==='history'"></artifact-history>
+        <artifact-history *ngIf="activeSection==='history'" [artifact]="artifact"></artifact-history>
     </div>
 </div>

@@ -13,6 +13,7 @@ export let associationsByArtifact = '/artifacts/associations/:artifactId';
 
 // artifact history
 export let recentActivity = '/artifact-history/recent-activity/byApplication/:applicationId';
+export let artifactHistoryById = '/artifact-history/:artifactId';
 
 // employee
 export let employeeById = '/employees/:employeeId';

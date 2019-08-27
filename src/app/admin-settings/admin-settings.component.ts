@@ -11,19 +11,7 @@ declare var $: any;
 @Component({
 	selector: 'admin-settings',
 	templateUrl: 'admin-settings.component.html',
-	styles: [
-		`.sidenav-container {
-			position: absolute;
-			width: 100%;
-			height: 91.8%;
-		}`,
-		`.sideNav{
-			width:10%; background-color: #37474f;box-shadow: inset 4px 6px 20px 0 rgba(0, 0, 0, 0.55);overflow:hidden;
-		}`,
-		`.mat-grid-tile {
-			top: 68px;
-		}`
-	]
+	styleUrls: ['admin-settings.component.css']
 })
 
 export class AdminSettingsComponent implements OnInit {
