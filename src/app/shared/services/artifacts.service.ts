@@ -20,7 +20,8 @@ import {
     RequirementType,
     Artifact,
     Attribute,
-    AgileStatus
+    AgileStatus,
+    ArtifactAssociation
 } from "../../models";
 
 @Injectable()
@@ -88,8 +89,8 @@ export class ArtifactsService {
         return this.http.post<Artifact>(`${actionArtifact}`, artifact);
     }
 
-    associationByArtifact(artifactId: number): Observable<Artifact[]> {
-        return this.http.get<Artifact[]>(
+    associationByArtifact(artifactId: number): Observable<ArtifactAssociation[]> {
+        return this.http.get<ArtifactAssociation[]>(
             `${associationsByArtifact
                 .replace(':artifactId', artifactId.toString())}`
         );

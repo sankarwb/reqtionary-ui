@@ -21,13 +21,14 @@ import {Artifact, Attribute, ArtifactAttribute} from '../../models';
 })
 
 export class ArtifactAttributesComponent implements OnDestroy {
+    
     private _artifact: Artifact;
     @Input() attributes: Attribute[];
     @Input() set artifact(artifact: Artifact) {
         this._artifact = artifact;
-        if (this._artifact.attributes) {
+        if (!!this._artifact.attributes) {
             this._artifact.attributes.forEach(attribute => {
-                this.selections[attribute.id] = attribute.value;
+                this.selections[attribute.appObjectAttributeId] = attribute.value;
             });
         }
     }
@@ -37,21 +38,22 @@ export class ArtifactAttributesComponent implements OnDestroy {
     private selections: {[key: number]: any} = {};
 
     getAttributeSelections() {
-        if (!this.artifact.attributes) {
-            this.artifact.attributes = [];
-        }
+        let attributes = [];
         this.artifact.attributes.forEach(attribute => {
-            attribute.value = Array.isArray(this.selections[attribute.id]) ? this.selections[attribute.id].join() : this.selections[attribute.id];
+            attribute.value = Array.isArray(this.selections[attribute.appObjectAttributeId]) ? this.selections[attribute.appObjectAttributeId].join() : this.selections[attribute.appObjectAttributeId];
         });
-        Object.keys(this.selections).forEach(selection => {
-            if (this.artifact.attributes.findIndex(attribute => attribute.id===parseInt(selection)) === -1) {
-                let attribute = new ArtifactAttribute();
-                attribute.id = parseInt(selection);
-                attribute.appObjectAttributeId = this.attributes.find(attribute => attribute.id===parseInt(selection)).appObjectAttributeId;
-                attribute.value = Array.isArray(this.selections[selection]) ? this.selections[selection].join() : this.selections[selection];
-                this.artifact.attributes.push(attribute);
+        for (const [key, value] of Object.entries(this.selections)) {
+            let attribute = this.artifact.attributes.find(item => item.appObjectAttributeId===parseInt(key));
+            if (!attribute) {
+                const props = this.attributes.find(attribute => attribute.appObjectAttributeId===parseInt(key));
+                attribute = new ArtifactAttribute();
+                attribute.id = props.id;
+                attribute.appObjectAttributeId = props.appObjectAttributeId;
             }
-        });
+            attribute.value = Array.isArray(value) ? value.join() : value;
+            attributes.push(attribute);
+        }
+        this.artifact.attributes = attributes;
     }
 
     ngOnDestroy() {

@@ -4,7 +4,7 @@
     <mat-icon style="font-size: 50px; margin: 5% 0;">publish</mat-icon>
     <input style="width: 0.1px; height: 0.1px; overflow: hidden;" type="file" name="files" id="file"
         accept=".png, .jpg, .jpeg, .doc, .docx, .xml, .xls, .xlsx"
-        ng2FileSelect [uploader]="uploader"/>
-    <label for="file" style="margin-bottom: 5%;"><strong>Drag files here or click to upload!</strong></label>
+        ng2FileSelect (fileSelect)="fileOver($event)" [uploader]="uploader"/>
+    <label for="file" style="margin-bottom: 5%; cursor: pointer;"><strong>Drag files here or click to upload!</strong></label>
     <button (click)="upload()">Upload</button>
 </div>

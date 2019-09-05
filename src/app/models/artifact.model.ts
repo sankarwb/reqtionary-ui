@@ -1,6 +1,9 @@
 import { BaseModel } from "./base.model";
 import { Employee } from "./employee.model";
 import { ArtifactAttribute } from "./artifact-attribute.model";
+import { ArtifactAssociation } from "./artifact-association.model";
+import { Attachment } from "./attachment.model";
+import { Conversation } from "./conversation.model";
 
 export class Artifact extends BaseModel {
     applicationId: number;
@@ -11,7 +14,9 @@ export class Artifact extends BaseModel {
     actualPoints: number;
     expectedPoints: number;
     status: string;
-    comments: string;
+    comments: Conversation[];
     user: Employee;
     attributes: ArtifactAttribute[];
+    associations: ArtifactAssociation[];
+    attachments: Attachment[];
 }

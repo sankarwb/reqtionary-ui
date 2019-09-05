@@ -1,5 +1,7 @@
 <div class="flex-box-row">
-    <conversations style="width: 60%; margin-top: 1%; margin-right: 1%;" [conversations]="conversations"></conversations>
+    <div style="width: 60%; margin-top: 1%; margin-right: 1%;">
+        <conversation *ngFor="let conversation of conversations;" [conversation]="conversation"></conversation>
+    </div>
     <div class="flex-box-column" style="width: 40%; margin-top: 1%;">
         <label style="color: #70757B; font-size: 14px;">Start conversation</label>
         <textarea style="margin: 1% 0;" rows="8" #conversation></textarea>

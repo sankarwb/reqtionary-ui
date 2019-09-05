@@ -6,6 +6,8 @@ import {EventsService, GlobalSharedService} from "../../services";
 import {Artifact, Application, Attribute} from '../../models';
 import { EmployeeService, ArtifactsService } from '../../shared/services';
 import { ArtifactDetailsComponent } from './artifact-details.component';
+import { ArtifactCommentsComponent } from './artifact-comments.component';
+import { ArtifactAttachmentsComponent } from './artifact-attachments.component';
 
 @Component({
     selector: 'artifact',
@@ -29,7 +31,10 @@ import { ArtifactDetailsComponent } from './artifact-details.component';
 })
 
 export class ArtifactComponent implements OnInit, OnDestroy {
+    
     @ViewChild(ArtifactDetailsComponent, {static: true}) detailsComponent: ArtifactDetailsComponent;
+    @ViewChild(ArtifactCommentsComponent, {static: false}) commentsComponent: ArtifactCommentsComponent;
+    @ViewChild(ArtifactAttachmentsComponent, {static: false}) attachmentsComponent: ArtifactAttachmentsComponent;
     activeSection: string;
     attributes: Attribute[];
     artifact: Artifact;
@@ -77,6 +82,9 @@ export class ArtifactComponent implements OnInit, OnDestroy {
         }
         if (!!this.detailsComponent) {
             this.detailsComponent.attributeComponent.getAttributeSelections();
+        }
+        if (!!this.commentsComponent) {
+            
         }
         this.subscriptions.push(this.artifactService.actionArtifact(this.artifact).subscribe(result => {
             this.artifact = result;

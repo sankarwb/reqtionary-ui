@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, Inject} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { Artifact, RequirementType } from '../../models';
+import { Artifact, RequirementType, ArtifactAssociation, AssociationStatus } from '../../models';
 import { ArtifactsService } from '../../shared/services';
 
 declare var d3: any;
@@ -14,12 +14,7 @@ declare var d3: any;
 export class ArtifactAssociationsComponent implements OnInit {
     
   @Input() artifact: Artifact;
-  associations: any[] = [
-      {UID: 'D12', name: `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum`, color: '0FAA36'},
-      {UID: 'D13', name: 'dhs sjgd sgd gsdilkjdbas jhdgjagd', color: 'BF6FF5'},
-      {UID: 'D14', name: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', color: 'F74750'},
-      {UID: 'D15', name: 'dhs sjgd sgd gsdilkjdbas jhdgjagd', color: 'F1DA09'}
-  ];
+  STATUS = AssociationStatus;
 
   canvas: any;
   context: any;
@@ -33,7 +28,10 @@ export class ArtifactAssociationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: make service call to get associations if artifactId is not 0
+    this.artifactService.associationByArtifact(this.artifact.id)
+    .subscribe(associations => {
+      this.artifact.associations = associations;
+    });
     this.canvas = document.querySelector("canvas"),
     this.context = this.canvas.getContext("2d"),
     this.width = this.canvas.width,
@@ -83,8 +81,12 @@ export class ArtifactAssociationsComponent implements OnInit {
     });
   }
 
-  addMore() {
+  addMore(): void {
     this.openDialog();
+  }
+
+  onActionStatus(association: ArtifactAssociation): void {
+    association.status = association.status === AssociationStatus.DELETE ? AssociationStatus.NEW : AssociationStatus.DELETE;
   }
 
   openDialog(): void {
@@ -97,7 +99,9 @@ export class ArtifactAssociationsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.associations.push(result);
+      if (!!result) {
+        this.artifact.associations.push(result);
+      }
     });
   }
 
@@ -178,6 +182,7 @@ export class SelectAssociationDialog {
   }
 
   onNoClick(): void {
+    this.selectedAssociation = null;
     this.dialogRef.close();
   }
 }

@@ -3,28 +3,28 @@
         <div class="flex-box-column" *ngFor="let attribute of attributes;" [ngSwitch]="attribute.type">
             <label>{{attribute.name}}</label>
             <span *ngSwitchCase="'Text Input'">
-                <input type="text" [name]="attribute.id" [(ngModel)]="selections[attribute.id]">
+                <input type="text" [name]="attribute.appObjectAttributeId" [(ngModel)]="selections[attribute.appObjectAttributeId]">
             </span>
             <span *ngSwitchCase="'Combo Box'">
-                <select [name]="attribute.id" [(ngModel)]="selections[attribute.id]">
+                <select [name]="attribute.appObjectAttributeId" [(ngModel)]="selections[attribute.appObjectAttributeId]">
                     <option></option>
                     <option *ngFor="let value of attribute.values">{{value}}</option>
                 </select>
             </span>
             <span *ngSwitchCase="'Date'">
-                <input type="date" [name]="attribute.id" [(ngModel)]="selections[attribute.id]">
+                <input type="date" [name]="attribute.appObjectAttributeId" [(ngModel)]="selections[attribute.appObjectAttributeId]">
             </span>
             <span *ngSwitchCase="'Numeric Input'">
-                <input type="number" [name]="attribute.id" [(ngModel)]="selections[attribute.id]">
+                <input type="number" [name]="attribute.appObjectAttributeId" [(ngModel)]="selections[attribute.appObjectAttributeId]">
             </span>
             <span *ngSwitchCase="'Check Box'">
                 <span *ngFor="let value of attribute.values">
-                    <input type="checkbox" [name]="attribute.id" [(ngModel)]="selections[attribute.id]">
+                    <input type="checkbox" [name]="attribute.appObjectAttributeId" [(ngModel)]="selections[attribute.appObjectAttributeId]">
                 </span>
             </span>
             <span *ngSwitchCase="'Radio Button'">
                 <span *ngFor="let value of attribute.values">
-                    <input type="radio" [name]="attribute.id" [(ngModel)]="selections[attribute.id]">
+                    <input type="radio" [name]="attribute.appObjectAttributeId" [(ngModel)]="selections[attribute.appObjectAttributeId]">
                 </span>
             </span>
         </div>

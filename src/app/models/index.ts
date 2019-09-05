@@ -9,3 +9,5 @@ export * from './attribute.model';
 export * from './conversation.model';
 export * from './comment.model';
 export * from './artifact-attribute.model';
+export * from './artifact-association.model';
+export * from './attachment.model';

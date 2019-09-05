@@ -8,7 +8,7 @@
                 <span style="font-size: 12px;">{{conversation?.time}}</span>
             </span>
             <article style="color: #262626; font-size: 12px; margin-top: 1%;">{{conversation?.comment}}</article>
-            <a style="font-size: 12px; margin-top: 1%;" *ngIf="conversation.comments.length" (click)="showComments=!showComments;">{{showComments?'HIDE':'SHOW'}} COMMENTS 
+            <a style="font-size: 12px; margin-top: 1%;" *ngIf="conversation.comments.length" (click)="showComments=!showComments;">{{showComments?'Hide':'Show'}} Comments 
                 <!-- <mat-icon *ngIf="!showComments">keyboard_arrow_down</mat-icon>
                 <mat-icon *ngIf="showComments">keyboard_arrow_up</mat-icon> -->
             </a>
@@ -28,8 +28,8 @@
         </div>
     </span>
     <div class="flex-box-column" style="padding: 1%; border-top: 1px solid #E5E8E8;">
-        <label style="color: #70757B; font-size: 10px;">REPLY TO A CONVERSATION</label>
+        <label style="color: #70757B; font-size: 10px;">Reply</label>
         <textarea style="margin: 1% 0;" rows="2" #comment></textarea>
-        <a style="font-size: 10px;" (click)="addComment(comment.value); comment.value='';">SUBMIT</a>
+        <a style="font-size: 10px;" (click)="addComment(comment.value); comment.value='';">Add</a>
     </div>
 </div>

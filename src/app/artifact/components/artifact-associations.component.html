@@ -1,22 +1,24 @@
 <div class="flex-box-row" style="margin-top: 1%;">
     <div class="flex-box-column" style="width: 33%; font-size: 12px; margin-right: 1%;">
         <div class="flex-box-row-vertical-center" style="height: 70px; margin: 1%; border-radius: 6px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);"
-            *ngFor="let association of associations;">
+            *ngFor="let association of artifact.associations;">
             <div class="flex-box-column-center">
                 <!-- <div style="border-radius: 30px; background-color: #0FAA36; box-shadow: 0px 0px 20px rgba(15, 170, 54, 0.15);">A</div> -->
                 <svg height="30" width="30">
-                    <circle cx="13" cy="13" r="10" stroke="black" stroke-width="0" attr.fill="#{{association.color}}" />
+                    <circle cx="13" cy="13" r="10" stroke="black" stroke-width="0" attr.fill="{{association.color}}" />
                 </svg>
-                <mat-icon style="font-size: 20px;">delete_outline</mat-icon>
+                <mat-icon style="font-size: 20px; cursor: pointer;" (click)="onActionStatus(association)">
+                    {{association.status===STATUS.DELETE?'undo':'delete_outline'}}
+                </mat-icon>
             </div>
             <span style="margin: 3%;">{{association?.UID}}</span>
-            <span style="width: 95%; height: 95%; overflow: hidden; text-overflow: ellipsis;">{{association?.name}}</span>
+            <span style="margin: 3%; overflow: hidden; text-overflow: ellipsis;">{{association?.name}}</span>
         </div>
         <a class="flex-box-row-center gradient-background"
             style="height: 24px; margin-top: 2%; text-align: center; border-radius: 30px; box-shadow: 0px 0px 20px rgba(32, 100, 245, 0.2);"
             (click)="addMore()">
             <mat-icon style="color: white; margin-right: 2%;">add</mat-icon>
-            <span style="color: white; font-size: 12px;">{{(associations && associations.length)?'Add More':'Add Associations'}}</span>
+            <span style="color: white; font-size: 12px;">{{(artifact.associations && artifact.associations.length)?'Add More':'Add Associations'}}</span>
         </a>
     </div>
     <div style="width: 67%; border: 1px solid #E5E8E8; border-radius: 6px;">
