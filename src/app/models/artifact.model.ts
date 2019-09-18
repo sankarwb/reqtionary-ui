@@ -4,11 +4,13 @@ import { ArtifactAttribute } from "./artifact-attribute.model";
 import { ArtifactAssociation } from "./artifact-association.model";
 import { Attachment } from "./attachment.model";
 import { Conversation } from "./conversation.model";
+import { RequirementType } from "./requirement-type.model";
 
 export class Artifact extends BaseModel {
     applicationId: number;
     projectId: number;
     requirementTypeId: number;
+    requirementType: RequirementType;
     parentId: number;
     UID: string;
     actualPoints: number;

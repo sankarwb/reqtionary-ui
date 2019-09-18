@@ -53,7 +53,7 @@ export class ManageApplicationComponent implements OnInit,AdminSettings {
 		{key:'modifiedBy',value:'Modified By',display:false,width:8}
 	];
 
-	constructor(private globalService:GlobalSharedService,private adminService: AdminSettingsService,private reqTypeService: RequirementTypeService) {}
+	constructor(public globalService:GlobalSharedService,private adminService: AdminSettingsService,private reqTypeService: RequirementTypeService) {}
 
 	ngOnInit() {
 		if( ! this.globalService.divisions )

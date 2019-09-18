@@ -14,12 +14,12 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 4200
+EXPOSE 8080
 
 CMD npm run build
 
 FROM nginx:1.17.2
 
-COPY --from=node /usr/src/app/dist/reqtionary-ui /usr/share/nginx/html
+COPY --from=node /usr/src/app/dist/Reqtionary6-new /usr/share/nginx/html
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf

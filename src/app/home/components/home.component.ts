@@ -34,11 +34,11 @@ import {Application} from '../../models/application.model';
 export class HomeComponent implements OnDestroy {
 
     @ViewChildren(HomeApplicationComponent) applicationComponents: QueryList<HomeApplicationComponent>;
-    private applications: Application[];
+    applications: Application[];
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private globalService: GlobalSharedService
+        public globalService: GlobalSharedService
     ) {
         this.applications = this.activatedRoute.snapshot.data['applications'];
     }

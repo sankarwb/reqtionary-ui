@@ -53,7 +53,7 @@ export class AttributeComponent implements OnInit, AdminSettings {
 		{key:'modifiedDate',value:'Modified Date',dataType:'date',display:true,width:8}
 	];
 
-	constructor(private globalService:GlobalSharedService ,private adminService: AdminSettingsService,private attributeService: AttributeService) {}
+	constructor(public globalService:GlobalSharedService ,private adminService: AdminSettingsService,private attributeService: AttributeService) {}
 	selectedRow:any;
 	ngOnInit() {
 		if( ! this.globalService.attributes ) this.updateList();

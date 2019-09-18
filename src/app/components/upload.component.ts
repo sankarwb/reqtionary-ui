@@ -91,7 +91,7 @@ export class UploadComponent {
             this.uploadSuccess.emit(JSON.parse(response));
         }
 	}
-    private uploader: FileUploader = new FileUploader({ url: this.globalService.getServerURL() + "fileupload" });
+    uploader: FileUploader = new FileUploader({ url: this.globalService.getServerURL() + "fileupload" });
 
     @Output() uploadSuccess = new EventEmitter<any>();
 

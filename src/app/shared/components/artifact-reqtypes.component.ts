@@ -33,7 +33,7 @@ import { ArtifactsService } from "../services";
 })
 export class ArtifactReqtypesComponent {
 
-    private reqtypes: RequirementType[];
+    reqtypes: RequirementType[];
     private selectedRequirementTypeId: number;
     private subscriptions: Subscription[] = [];
 

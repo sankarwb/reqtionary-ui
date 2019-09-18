@@ -45,7 +45,7 @@ export class RequirementTypeComponent implements OnInit, AdminSettings {
 	];
 	selectedRow:any;
 	statusAttr:any = new Attribute(0,'','','Combo Box',-1,1);
-	constructor(private globalService:GlobalSharedService ,private adminService: AdminSettingsService, private reqTypeService: RequirementTypeService, private attributeService: AttributeService) {}
+	constructor(public globalService:GlobalSharedService ,private adminService: AdminSettingsService, private reqTypeService: RequirementTypeService, private attributeService: AttributeService) {}
 
 	ngOnInit() {
 		if( ! this.globalService.requirementTypes ) this.updateList();

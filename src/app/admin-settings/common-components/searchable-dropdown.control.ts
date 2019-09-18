@@ -65,11 +65,11 @@ declare var $: any;
 export class SearchableDropdownComponent {
     
     @ViewChild('searchInput', {static: true}) searchInput: ElementRef;
-    private popupOpened = false;
-    private searchTxt: string;
+    popupOpened = false;
+    searchTxt: string;
     @Input() placeholder: string;
-    private filtered: any[];
-    private selections: any[] = [];
+    filtered: any[];
+    selections: any[] = [];
     private _options: any[];
 
     @Input() set options(list : any[]) {

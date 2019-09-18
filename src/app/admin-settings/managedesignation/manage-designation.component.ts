@@ -22,7 +22,7 @@ export class Designation {
 })
 
 export class ManageDesignationComponent implements OnInit, AdminSettings {
-	constructor(private adminService: AdminSettingsService, private globalService: GlobalSharedService) { }
+	constructor(private adminService: AdminSettingsService, public globalService: GlobalSharedService) { }
 	selectedIndex:number = 0;
 	label:string = "Add New";
 	columns:any[] = [

@@ -55,7 +55,7 @@ export class RequirementTypeBoxComponent implements OnInit {
 
 	@Input() showFilterBox:boolean = true;
 	@Input() requirementTypes:any[];
-	private selectedRequirementType:any;
+	selectedRequirementType:any;
 
 	constructor() {}
 

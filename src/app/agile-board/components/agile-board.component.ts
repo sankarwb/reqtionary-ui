@@ -52,6 +52,7 @@ export class AgileBoardComponent implements OnInit, OnDestroy {
 
     onRequirementTypesLoaded(requirementTypeId: number): void {
         this.requirementTypeId = requirementTypeId;
+        // TODO: replace 37 with reqTypeId
         forkJoin(
             this.artifactsService.agileStatuses(this.application.id),
             this.artifactsService.artifacts(this.application.id, this.projectId, 37)

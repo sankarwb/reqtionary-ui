@@ -21,7 +21,7 @@ export class Phase {
 })
 
 export class ManagePhaseComponent implements OnInit,AdminSettings {
-	constructor(private adminService: AdminSettingsService, private globalService: GlobalSharedService) { }
+	constructor(private adminService: AdminSettingsService, public globalService: GlobalSharedService) { }
 	selectedIndex:number = 0;
 	label:string = "Add New";
 	columns:any[] = [

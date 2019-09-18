@@ -35,7 +35,7 @@ export class ManageDivisionComponent implements OnInit,AdminSettings {
 		{key:'modifiedBy',value:'Modified By',display:true,width:8}
 	];
 
-	constructor(private globalService:GlobalSharedService ,private adminService: AdminSettingsService) {}
+	constructor(public globalService:GlobalSharedService ,private adminService: AdminSettingsService) {}
 
 	ngOnInit() {
 		if( ! this.globalService.divisions ) this.updateList();

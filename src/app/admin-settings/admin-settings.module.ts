@@ -5,7 +5,6 @@ import {AngularMaterialModule} from '../angularmaterial/angular-material.module'
 import {SharedModule} from '../shared/shared.module';
 
 import { SearchableTableComponent } from '../components/searchable-table.component';
-import { EditableTableComponent } from '../components/editable-table.component';
 
 import { AdminSettingsComponent } from './admin-settings.component';
 import { EditOrganizationComponent } from './editorganization/edit-organization.component';
@@ -64,7 +63,6 @@ const routes: Routes = [
 		RequirementTypeBoxComponent,
 		SearchableDropdownComponent,
 		SearchableTableComponent,
-		EditableTableComponent,
 		AdminSettingsComponent,
 		EditOrganizationComponent,
 		ManageDivisionComponent,

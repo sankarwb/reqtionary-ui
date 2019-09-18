@@ -19,11 +19,17 @@ import {
   ConversationComponent
 } from './components';
 import {
+  EditableTableComponent,
+  ImageSliderComponent,
+  UploadComponent
+} from '../components'
+import {
   ArtifactsService,
   EmployeeService,
   ProjectsService
 } from './services';
 import { DataGridPipe } from './pipes/data-grid.pipe';
+import {ArtifactFilterPipe} from '../pipes/artifactFilter.pipe';
 
 @NgModule({
   imports: [
@@ -48,7 +54,10 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
     NavigationPanelComponent,
     DataGridPipe,
     ConversationsComponent,
-    ConversationComponent
+    ConversationComponent,
+    EditableTableComponent,
+    ImageSliderComponent,
+    UploadComponent
   ],
   declarations: [
     HeaderComponent,
@@ -62,14 +71,19 @@ import { DataGridPipe } from './pipes/data-grid.pipe';
     UserThumbnailComponent,
     NavigationPanelComponent,
     DataGridPipe,
+    ArtifactFilterPipe,
     ConversationsComponent,
-    ConversationComponent
+    ConversationComponent,
+    EditableTableComponent,
+    ImageSliderComponent,
+    UploadComponent
   ],
   providers: [
     ArtifactsService,
     EmployeeService,
     ProjectsService,
-    DataGridPipe
+    DataGridPipe,
+    ArtifactFilterPipe
   ]
 })
 export class SharedModule { }

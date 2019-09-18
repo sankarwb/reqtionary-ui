@@ -90,11 +90,11 @@ import {GlobalSharedService, EventsService} from '../../services';
   ]
 })
 export class HeaderComponent {
-    private resizeLogo: boolean;
+    resizeLogo: boolean;
     private application: string;
 
     constructor(
-        private globalService: GlobalSharedService,
+        public globalService: GlobalSharedService,
         private eventsService: EventsService,
         private router: Router
     ) {
