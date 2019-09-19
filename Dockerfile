@@ -1,5 +1,7 @@
 FROM node:12.7.0 as node
 
+ARG envToBuild
+
 RUN npm install -g npm@6.10.2
 # install chrome for protractor tests
 #RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -16,10 +18,10 @@ COPY . .
 
 EXPOSE 8080
 
-CMD npm run build
+CMD npm run $envToBuild
 
 FROM nginx:1.17.2
 
-COPY --from=node /usr/src/app/dist/Reqtionary6-new /usr/share/nginx/html
+COPY --from=node /usr/src/app/dist/reqtionary /usr/share/nginx/html
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
