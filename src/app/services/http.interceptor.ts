@@ -19,7 +19,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token = this.globalService.employee && this.globalService.employee.token;
         const newReq = req.clone({
-            url: `${process.env.serverUrl}${req.url}`,
+            url: `${environment.SERVER_URL}${req.url}`,
             setHeaders: {
                 'Authorization': `Bearer ${token}`
             }
